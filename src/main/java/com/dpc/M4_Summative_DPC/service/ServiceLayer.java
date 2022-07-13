@@ -1,8 +1,10 @@
 package com.dpc.M4_Summative_DPC.service;
 
 import com.dpc.M4_Summative_DPC.models.Game;
+import com.dpc.M4_Summative_DPC.models.SalesTaxRate;
 import com.dpc.M4_Summative_DPC.repository.GameRepository;
 import com.dpc.M4_Summative_DPC.models.TShirt;
+import com.dpc.M4_Summative_DPC.repository.SalesTaxRateRepository;
 import com.dpc.M4_Summative_DPC.repository.TShirtRepository;
 import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class ServiceLayer {
 
     private TShirtRepository tShirtRepository;
     private GameRepository gameRepository;
+    private SalesTaxRateRepository salesTaxRateRepository;
 
     @Autowired
     public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository) {
@@ -101,5 +104,9 @@ public class ServiceLayer {
         tShirtRepository.deleteById(id);
     }
 
+    // Sales Tax CRUD
+    public SalesTaxRate findSalesTaxRateByState(String state) {
+        return salesTaxRateRepository.findByState(state);
+    }
 
 }
