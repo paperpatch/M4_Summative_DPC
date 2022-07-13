@@ -1,4 +1,4 @@
-package com.dpc.M4_Summative_DPC.model;
+package com.dpc.M4_Summative_DPC.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
