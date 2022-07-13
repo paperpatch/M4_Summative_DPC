@@ -1,6 +1,8 @@
 package com.dpc.M4_Summative_DPC.service;
 
+import com.dpc.M4_Summative_DPC.models.Console;
 import com.dpc.M4_Summative_DPC.models.Game;
+import com.dpc.M4_Summative_DPC.repository.ConsoleRepository;
 import com.dpc.M4_Summative_DPC.models.SalesTaxRate;
 import com.dpc.M4_Summative_DPC.repository.GameRepository;
 import com.dpc.M4_Summative_DPC.models.TShirt;
@@ -20,12 +22,17 @@ public class ServiceLayer {
 
     private TShirtRepository tShirtRepository;
     private GameRepository gameRepository;
+
+    private ConsoleRepository consoleRepository;
+
     private SalesTaxRateRepository salesTaxRateRepository;
 
+
     @Autowired
-    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository) {
+    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository) {
         this.tShirtRepository = tShirtRepository;
         this.gameRepository = gameRepository;
+        this.consoleRepository = consoleRepository;
     }
 
     // Game CRUD
@@ -44,6 +51,23 @@ public class ServiceLayer {
     public void updateGame(Game game) { gameRepository.save(game); }
 
     public void deleteGame(int id) { gameRepository.deleteById(id); }
+    public Console addConsole(Console console){
+        return consoleRepository.save(console);
+    }
+    public List<Console> getConsoleByManufacturer(String manufacturer) {
+        return consoleRepository.findByManufacturer(manufacturer); }
+    public List<Console> getAllConsole (){
+        return consoleRepository.findAll();
+    }
+    public Optional<Console> getConsoleById(int id) {
+        return consoleRepository.findById(id);
+    }
+    public void updateConsole(Console console){
+        consoleRepository.save(console);
+    }
+    public void deleteConsole(int id){
+        consoleRepository.deleteById(id);
+    }
 
 
 
