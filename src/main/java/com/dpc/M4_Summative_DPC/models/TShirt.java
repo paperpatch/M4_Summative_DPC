@@ -24,8 +24,7 @@ public class TShirt {
 
     public TShirt(){}
 
-    public TShirt(Integer id, String size, String color, String description, double price, int quantity) {
-        this.id = id;
+    public TShirt(String size, String color, String description, double price, int quantity) {
         this.size = size;
         this.color = color;
         this.description = description;
