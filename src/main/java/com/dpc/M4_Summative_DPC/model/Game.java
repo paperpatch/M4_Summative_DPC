@@ -7,8 +7,8 @@ import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "games")
-public class Games {
+@Table(name = "game")
+public class Game {
 
     @Id
     @Column(name = "game_id")
@@ -55,8 +55,8 @@ public class Games {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Games games = (Games) o;
-        return id == games.id && Objects.equals(studio, games.studio) && Objects.equals(esrb, games.esrb) && Objects.equals(title, games.title);
+        Game game = (Game) o;
+        return id == game.id && Objects.equals(studio, game.studio) && Objects.equals(esrb, game.esrb) && Objects.equals(title, game.title);
     }
 
     @Override
