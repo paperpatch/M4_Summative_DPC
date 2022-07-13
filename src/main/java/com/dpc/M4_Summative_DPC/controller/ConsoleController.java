@@ -17,8 +17,8 @@ public class ConsoleController {
     // Create a console
     @RequestMapping(value = "/console", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Console createConsole(@RequestBody Console customer) {
-        return consoleRepository.save(customer);
+    public Console createConsole(@RequestBody Console console) {
+        return consoleRepository.save(console);
     }
     //    Get all console
     @RequestMapping(value = "/console", method = RequestMethod.GET)
@@ -30,7 +30,7 @@ public class ConsoleController {
         return consoleRepository.findAll();
     }
     //    Get console by id
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/console/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Console getCConsoleById(@PathVariable int id) {
         Optional<Console> console = consoleRepository.findById(id);
@@ -39,7 +39,7 @@ public class ConsoleController {
         }
         return console.get();
     }
-    //    Update a customer
+    //    Update a console
     @RequestMapping(value = "console/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAConsole(@PathVariable int id, @RequestBody Console console) {
@@ -51,7 +51,7 @@ public class ConsoleController {
         }
         consoleRepository.save(console);
     }
-    //    Delete customer
+    //    Delete console
     @RequestMapping(value = "/console/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroyConsole(@PathVariable int id) {
