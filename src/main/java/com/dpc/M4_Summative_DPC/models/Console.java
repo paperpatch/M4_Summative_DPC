@@ -12,7 +12,7 @@ public class Console {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id")
     private  Integer consoleId;
-    private String Model;
+    private String model;
     private String manufacturer;
     @Column(name = "memory_amount")
     private Double memoryAmount;
@@ -22,7 +22,7 @@ public class Console {
 
     public Console(Integer consoleId, String model, String manufacturer, Double memoryAmount, String processor, Double price, Integer quantity) {
         this.consoleId = consoleId;
-        Model = model;
+        this.model = model;
         this.manufacturer = manufacturer;
         this.memoryAmount = memoryAmount;
         this.processor = processor;
@@ -42,11 +42,11 @@ public class Console {
     }
 
     public String getModel() {
-        return Model;
+        return model;
     }
 
     public void setModel(String model) {
-        Model = model;
+        this.model = model;
     }
 
     public String getManufacturer() {
@@ -94,19 +94,19 @@ public class Console {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Console console = (Console) o;
-        return Objects.equals(consoleId, console.consoleId) && Objects.equals(Model, console.Model) && Objects.equals(manufacturer, console.manufacturer) && Objects.equals(memoryAmount, console.memoryAmount) && Objects.equals(processor, console.processor) && Objects.equals(price, console.price) && Objects.equals(quantity, console.quantity);
+        return Objects.equals(consoleId, console.consoleId) && Objects.equals(model, console.model) && Objects.equals(manufacturer, console.manufacturer) && Objects.equals(memoryAmount, console.memoryAmount) && Objects.equals(processor, console.processor) && Objects.equals(price, console.price) && Objects.equals(quantity, console.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(consoleId, Model, manufacturer, memoryAmount, processor, price, quantity);
+        return Objects.hash(consoleId, model, manufacturer, memoryAmount, processor, price, quantity);
     }
 
     @Override
     public String toString() {
         return "Console{" +
                 "consoleId=" + consoleId +
-                ", Model='" + Model + '\'' +
+                ", model='" + model + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", memoryAmount=" + memoryAmount +
                 ", processor='" + processor + '\'' +
