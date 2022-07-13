@@ -1,7 +1,6 @@
 package com.dpc.M4_Summative_DPC.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,6 +14,7 @@ public class Game {
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotEmpty
     private String title;
     @NotEmpty
@@ -49,6 +49,7 @@ public class Game {
         this.studio = studio;
         this.quantity = quantity;
     }
+
 
     public int getId() {
         return id;
@@ -104,6 +105,7 @@ public class Game {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+
     }
 
     @Override
@@ -121,6 +123,7 @@ public class Game {
 
     @Override
     public String toString() {
+
         return "Game{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
