@@ -1,5 +1,7 @@
 package com.dpc.M4_Summative_DPC.service;
 
+import com.dpc.M4_Summative_DPC.models.Game;
+import com.dpc.M4_Summative_DPC.repository.GameRepository;
 import com.dpc.M4_Summative_DPC.models.TShirt;
 import com.dpc.M4_Summative_DPC.repository.TShirtRepository;
 import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
@@ -15,20 +17,42 @@ import java.util.Optional;
 public class ServiceLayer {
 
     private TShirtRepository tShirtRepository;
+    private GameRepository gameRepository;
 
     @Autowired
-    public ServiceLayer(TShirtRepository tShirtRepository) {
+    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository) {
         this.tShirtRepository = tShirtRepository;
+        this.gameRepository = gameRepository;
     }
 
+    // Game CRUD
+    public List<Game> getAllGames() {return gameRepository.findAll(); }
+
+    public Optional<Game> getGameById(int id) { return gameRepository.findById(id); }
+
+    public Optional<Game> getGameByTitle(String title) { return gameRepository.findByTitle(title); }
+
+    public List<Game> getGamesByEsrbRating(String esrbRating) { return gameRepository.findByEsrbRating(esrbRating); }
+
+    public List<Game> getGamesByStudio(String studio) { return gameRepository.findByStudio(studio); }
+
+    public Game addGame(Game game) { return gameRepository.save(game); }
+
+    public void updateGame(Game game) { gameRepository.save(game); }
+
+    public void deleteGame(int id) { gameRepository.deleteById(id); }
+
+
+
+    //T-Shirt CRUD
     @Transactional
     public TShirtViewModel saveTShirt(TShirtViewModel tShirtViewModel){
         TShirt t = new TShirt();
-                t.setSize(tShirtViewModel.getSize());
-                t.setColor(tShirtViewModel.getColor());
-                t.setDescription(tShirtViewModel.getDescription());
-                t.setPrice(tShirtViewModel.getPrice());
-                t.setQuantity(tShirtViewModel.getQuantity());
+        t.setSize(tShirtViewModel.getSize());
+        t.setColor(tShirtViewModel.getColor());
+        t.setDescription(tShirtViewModel.getDescription());
+        t.setPrice(tShirtViewModel.getPrice());
+        t.setQuantity(tShirtViewModel.getQuantity());
 
         return tShirtViewModel;
     }
@@ -38,12 +62,12 @@ public class ServiceLayer {
     }
     private TShirtViewModel buildTShirtViewModel(TShirt tShirt) {
         TShirtViewModel tvm = new TShirtViewModel();
-                tvm.setId(tShirt.getId());
-                tvm.setSize(tShirt.getSize());
-                tvm.setColor(tShirt.getColor());
-                tvm.setDescription(tShirt.getDescription());
-                tvm.setPrice(tShirt.getPrice());
-                tvm.setQuantity(tShirt.getQuantity());
+        tvm.setId(tShirt.getId());
+        tvm.setSize(tShirt.getSize());
+        tvm.setColor(tShirt.getColor());
+        tvm.setDescription(tShirt.getDescription());
+        tvm.setPrice(tShirt.getPrice());
+        tvm.setQuantity(tShirt.getQuantity());
         ;
         return tvm;
     }
@@ -76,5 +100,6 @@ public class ServiceLayer {
     public void removeTShirt(int id){
         tShirtRepository.deleteById(id);
     }
+
 
 }

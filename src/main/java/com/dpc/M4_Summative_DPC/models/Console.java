@@ -11,18 +11,18 @@ public class Console {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id")
-    private  int consoleId;
-    private String Model;
+    private  Integer consoleId;
+    private String model;
     private String manufacturer;
     @Column(name = "memory_amount")
-    private double memoryAmount;
+    private Double memoryAmount;
     private String processor;
-    private double price;
-    private int quantity;
+    private Double price;
+    private Integer quantity;
 
-    public Console(int consoleId, String model, String manufacturer, double memoryAmount, String processor, double price, int quantity) {
+    public Console(Integer consoleId, String model, String manufacturer, Double memoryAmount, String processor, Double price, Integer quantity) {
         this.consoleId = consoleId;
-        Model = model;
+        this.model = model;
         this.manufacturer = manufacturer;
         this.memoryAmount = memoryAmount;
         this.processor = processor;
@@ -33,20 +33,20 @@ public class Console {
     public Console() {
     }
 
-    public int getConsoleId() {
+    public Integer getConsoleId() {
         return consoleId;
     }
 
-    public void setConsoleId(int consoleId) {
+    public void setConsoleId(Integer consoleId) {
         this.consoleId = consoleId;
     }
 
     public String getModel() {
-        return Model;
+        return model;
     }
 
     public void setModel(String model) {
-        Model = model;
+        this.model = model;
     }
 
     public String getManufacturer() {
@@ -57,11 +57,11 @@ public class Console {
         this.manufacturer = manufacturer;
     }
 
-    public double getMemoryAmount() {
+    public Double getMemoryAmount() {
         return memoryAmount;
     }
 
-    public void setMemoryAmount(double memoryAmount) {
+    public void setMemoryAmount(Double memoryAmount) {
         this.memoryAmount = memoryAmount;
     }
 
@@ -73,19 +73,19 @@ public class Console {
         this.processor = processor;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -94,19 +94,19 @@ public class Console {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Console console = (Console) o;
-        return consoleId == console.consoleId && Double.compare(console.memoryAmount, memoryAmount) == 0 && Double.compare(console.price, price) == 0 && quantity == console.quantity && Objects.equals(Model, console.Model) && Objects.equals(manufacturer, console.manufacturer) && Objects.equals(processor, console.processor);
+        return Objects.equals(consoleId, console.consoleId) && Objects.equals(model, console.model) && Objects.equals(manufacturer, console.manufacturer) && Objects.equals(memoryAmount, console.memoryAmount) && Objects.equals(processor, console.processor) && Objects.equals(price, console.price) && Objects.equals(quantity, console.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(consoleId, Model, manufacturer, memoryAmount, processor, price, quantity);
+        return Objects.hash(consoleId, model, manufacturer, memoryAmount, processor, price, quantity);
     }
 
     @Override
     public String toString() {
         return "Console{" +
                 "consoleId=" + consoleId +
-                ", Model='" + Model + '\'' +
+                ", model='" + model + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", memoryAmount=" + memoryAmount +
                 ", processor='" + processor + '\'' +
