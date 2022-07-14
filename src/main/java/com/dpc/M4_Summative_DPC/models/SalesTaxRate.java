@@ -7,11 +7,13 @@ import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "sales_tax_rate", indexes = {@Index(name = "ix_state_rate", columnList="state")}) // https://www.baeldung.com/jpa-indexes & https://stackoverflow.com/questions/3405229/specifying-an-index-non-unique-key-using-jpa
+@Table(name = "sales_tax_rate")
 public class SalesTaxRate {
     @Id
-    @Column(name = "tax_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "tax_id")
     private String state;
 
     private double rate;
@@ -19,9 +21,18 @@ public class SalesTaxRate {
     public SalesTaxRate() {
     }
 
-    public SalesTaxRate(String state, double rate) {
+    public SalesTaxRate(int id, String state, double rate) {
+        this.id = id;
         this.state = state;
         this.rate = rate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getState() {
@@ -45,18 +56,19 @@ public class SalesTaxRate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SalesTaxRate that = (SalesTaxRate) o;
-        return Double.compare(that.rate, rate) == 0 && Objects.equals(state, that.state);
+        return id == that.id && Double.compare(that.rate, rate) == 0 && Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, rate);
+        return Objects.hash(id, state, rate);
     }
 
     @Override
     public String toString() {
         return "SalesTaxRate{" +
-                "state='" + state + '\'' +
+                "id=" + id +
+                ", state='" + state + '\'' +
                 ", rate=" + rate +
                 '}';
     }
