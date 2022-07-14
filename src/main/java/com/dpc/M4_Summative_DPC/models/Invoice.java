@@ -22,41 +22,21 @@ public class Invoice {
     private String city;
     @NotEmpty
     private String state;
-    private String Zipcode;
+    private String zipCode;
     @Column(name= "item_type")
     private String itemType;
     @Column(name= "item_id")
-    private Integer itemId;
+    private int itemId;
     @Column(name= "unit_price")
-    private Double unitPrice;
+    private double unitPrice;
     @NotEmpty
-    private Integer quantity;
-    private Double subtotal;
-    @Column(name= "sale_tax_rate")
-    private Double saleTaxRate;
+    private int quantity;
+    private double subtotal;
+    @Column(name= "tax")
+    private double tax;
     @Column(name= "processing_fee")
-    private Double processingFee;
-    private Double total;
-
-    public Invoice(Integer invoiceId, String name, String street, String city, String state, String zipcode, String itemType, Integer itemId, Double unitPrice, Integer quantity, Double subtotal, Double saleTaxRate, Double processingFee, Double total) {
-        this.invoiceId = invoiceId;
-        this.name = name;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        Zipcode = zipcode;
-        this.itemType = itemType;
-        this.itemId = itemId;
-        this.unitPrice = unitPrice;
-        this.quantity = quantity;
-        this.subtotal = subtotal;
-        this.saleTaxRate = saleTaxRate;
-        this.processingFee = processingFee;
-        this.total = total;
-    }
-
-    public Invoice() {
-    }
+    private double processingFee;
+    private double total;
 
     public Integer getInvoiceId() {
         return invoiceId;
@@ -98,12 +78,12 @@ public class Invoice {
         this.state = state;
     }
 
-    public String getZipcode() {
-        return Zipcode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setZipcode(String zipcode) {
-        Zipcode = zipcode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getItemType() {
@@ -114,59 +94,59 @@ public class Invoice {
         this.itemType = itemType;
     }
 
-    public Integer getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(Integer itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 
-    public Double getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public Double getSubtotal() {
+    public double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(Double subtotal) {
+    public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
 
-    public Double getSaleTaxRate() {
-        return saleTaxRate;
+    public double getSaleTaxRate() {
+        return tax;
     }
 
-    public void setSaleTaxRate(Double saleTaxRate) {
-        this.saleTaxRate = saleTaxRate;
+    public void setSaleTaxRate(double tax) {
+        this.tax = tax;
     }
 
-    public Double getProcessingFee() {
+    public double getProcessingFee() {
         return processingFee;
     }
 
-    public void setProcessingFee(Double processingFee) {
+    public void setProcessingFee(double processingFee) {
         this.processingFee = processingFee;
     }
 
-    public Double getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
@@ -175,12 +155,12 @@ public class Invoice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(name, invoice.name) && Objects.equals(street, invoice.street) && Objects.equals(city, invoice.city) && Objects.equals(state, invoice.state) && Objects.equals(Zipcode, invoice.Zipcode) && Objects.equals(itemType, invoice.itemType) && Objects.equals(itemId, invoice.itemId) && Objects.equals(unitPrice, invoice.unitPrice) && Objects.equals(quantity, invoice.quantity) && Objects.equals(subtotal, invoice.subtotal) && Objects.equals(saleTaxRate, invoice.saleTaxRate) && Objects.equals(processingFee, invoice.processingFee) && Objects.equals(total, invoice.total);
+        return itemId == invoice.itemId && Double.compare(invoice.unitPrice, unitPrice) == 0 && quantity == invoice.quantity && Double.compare(invoice.subtotal, subtotal) == 0 && Double.compare(invoice.tax, tax) == 0 && Double.compare(invoice.processingFee, processingFee) == 0 && Double.compare(invoice.total, total) == 0 && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(name, invoice.name) && Objects.equals(street, invoice.street) && Objects.equals(city, invoice.city) && Objects.equals(state, invoice.state) && Objects.equals(zipCode, invoice.zipCode) && Objects.equals(itemType, invoice.itemType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoiceId, name, street, city, state, Zipcode, itemType, itemId, unitPrice, quantity, subtotal, saleTaxRate, processingFee, total);
+        return Objects.hash(invoiceId, name, street, city, state, zipCode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
     }
 
     @Override
@@ -191,13 +171,13 @@ public class Invoice {
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", Zipcode='" + Zipcode + '\'' +
+                ", zipCode='" + zipCode + '\'' +
                 ", itemType='" + itemType + '\'' +
                 ", itemId=" + itemId +
                 ", unitPrice=" + unitPrice +
                 ", quantity=" + quantity +
                 ", subtotal=" + subtotal +
-                ", saleTaxRate=" + saleTaxRate +
+                ", tax=" + tax +
                 ", processingFee=" + processingFee +
                 ", total=" + total +
                 '}';
