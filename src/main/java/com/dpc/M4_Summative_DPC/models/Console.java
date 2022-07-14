@@ -22,18 +22,27 @@ public class Console {
 //    @NotEmpty
     private int quantity;
 
-//    public Console(Integer consoleId, String model, String manufacturer, String memoryAmount, String processor, Double price, int quantity) {
-//        this.consoleId = consoleId;
-//        this.model = model;
-//        this.manufacturer = manufacturer;
-//        this.memoryAmount = memoryAmount;
-//        this.processor = processor;
-//        this.price = price;
-//        this.quantity = quantity;
-//    }
-//
-//    public Console() {
-//    }
+    public Console() {
+    }
+
+    public Console(String model, String manufacturer, String memoryAmount, String processor, Double price, int quantity) {
+        this.model = model;
+        this.manufacturer = manufacturer;
+        this.memoryAmount = memoryAmount;
+        this.processor = processor;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Console(Integer consoleId, String model, String manufacturer, String memoryAmount, String processor, Double price, int quantity) {
+        this.consoleId = consoleId;
+        this.model = model;
+        this.manufacturer = manufacturer;
+        this.memoryAmount = memoryAmount;
+        this.processor = processor;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public Integer getConsoleId() {
         return consoleId;
