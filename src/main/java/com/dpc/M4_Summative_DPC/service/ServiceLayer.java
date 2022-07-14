@@ -62,6 +62,12 @@ public class ServiceLayer {
         return consoleRepository.save(console);
     }
 
+    public void seedGames() {
+        gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 1));
+        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 2));
+        gameRepository.save(new Game("Among Us", "E (Everyone)", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 5));
+    }
+
     // Console CRUD
     public List<Console> getConsoleByManufacturer(String manufacturer) {
         return consoleRepository.findByManufacturer(manufacturer);
@@ -81,6 +87,12 @@ public class ServiceLayer {
 
     public void deleteConsole(int id){
         consoleRepository.deleteById(id);
+    }
+
+    public void seedConsole() {
+        consoleRepository.save(new Console("Playstation 5", "Sony", "1 TB", "AMD Zen 2-CPU", 549.99, 20));
+        consoleRepository.save(new Console("Xbox Series X", "Microsoft", "1 TB", "AMD Zen 2-CPU", 499.99, 10));
+        consoleRepository.save(new Console("Nintendo Switch", "Nintendo", "32 GB", "Quad-core ARM Cortex", 299.99, 15));
     }
 
     //T-Shirt CRUD
@@ -165,6 +177,12 @@ public class ServiceLayer {
     @Transactional
     public void removeTShirt(int id){
         tShirtRepository.deleteById(id);
+    }
+
+    public void seedTShirts() {
+        tShirtRepository.save(new TShirt("small", "red", "small red shirt", 9.99, 14));
+        tShirtRepository.save(new TShirt("medium", "blue", "medium sized blue shirt", 9.99, 30));
+        tShirtRepository.save(new TShirt("large", "green", "large sized green shirt", 9.99, 21));
     }
 
     // Sales Tax CRUD
