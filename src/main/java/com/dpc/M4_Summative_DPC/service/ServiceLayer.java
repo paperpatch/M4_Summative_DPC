@@ -31,10 +31,11 @@ public class ServiceLayer {
 
 
     @Autowired
-    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository) {
+    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository, SalesTaxRateRepository salesTaxRateRepository) {
         this.tShirtRepository = tShirtRepository;
         this.gameRepository = gameRepository;
         this.consoleRepository = consoleRepository;
+        this.salesTaxRateRepository = salesTaxRateRepository;
     }
 
     // Game CRUD
