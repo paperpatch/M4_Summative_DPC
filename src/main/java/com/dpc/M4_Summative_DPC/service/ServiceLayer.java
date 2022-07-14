@@ -19,20 +19,21 @@ public class ServiceLayer {
     private TShirtRepository tShirtRepository;
     private GameRepository gameRepository;
     private ConsoleRepository consoleRepository;
+    private InvoiceRepository invoiceRepository;
     private SalesTaxRateRepository salesTaxRateRepository;
     private ProcessingFeeRepository processingFeeRepository;
 
     @Autowired
-    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository, SalesTaxRateRepository salesTaxRateRepository, ProcessingFeeRepository processingFeeRepository) {
+    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository, InvoiceRepository invoiceRepository, SalesTaxRateRepository salesTaxRateRepository, ProcessingFeeRepository processingFeeRepository) {
         this.tShirtRepository = tShirtRepository;
         this.gameRepository = gameRepository;
         this.consoleRepository = consoleRepository;
+        this.invoiceRepository = invoiceRepository;
         this.salesTaxRateRepository = salesTaxRateRepository;
         this.processingFeeRepository = processingFeeRepository;
     }
 
     // Clear Database
-
     public void clearDatabase() {
         gameRepository.deleteAll();
         tShirtRepository.deleteAll();
@@ -74,8 +75,8 @@ public class ServiceLayer {
     // Console CRUD
     public List<Console> getConsoleByManufacturer(String manufacturer) {
         return consoleRepository.findByManufacturer(manufacturer);
-
     }
+
     public List<Console> getAllConsole (){
         return consoleRepository.findAll();
     }
@@ -85,12 +86,6 @@ public class ServiceLayer {
     }
 
     public void updateConsole(Console console){
-//        if (console.getConsoleId() == null) {
-//            console.setConsoleId(id);
-//        } else if (console.getConsoleId() != id) {
-//
-//            throw new IllegalArgumentException("Invalid id, enter the correct id.");
-//        }
         consoleRepository.save(console);
     }
 
@@ -182,6 +177,7 @@ public class ServiceLayer {
         tShirt.setQuantity(tShirtViewModel.getQuantity());
    tShirtRepository.save(tShirt);
     }
+
     @Transactional
     public void removeTShirt(int id){
         tShirtRepository.deleteById(id);
@@ -192,6 +188,23 @@ public class ServiceLayer {
         tShirtRepository.save(new TShirt("medium", "blue", "medium sized blue shirt", 9.99, 30));
         tShirtRepository.save(new TShirt("large", "green", "large sized green shirt", 9.99, 21));
     }
+
+    // Invoice CRUD
+
+    public List<Invoice> getAllInvoices() { return invoiceRepository.findAll(); }
+
+    public Optional<Invoice> getInvoiceById(int id) { return invoiceRepository.findById(id); }
+
+    public Invoice addInvoice(Invoice invoice) {
+        Invoice invoice1 = invoice;
+        double salesTax = invoice.getQuantity() * invoice.getUnitPrice();
+
+        return invoiceRepository.save(invoice);
+    }
+
+    public void updateInvoice(Invoice invoice) { invoiceRepository.save(invoice); }
+
+    public void deleteInvoice(int id) { invoiceRepository.deleteById(id); }
 
     // Sales Tax CRUD
     public SalesTaxRate findSalesTaxRateByState(String state) {
