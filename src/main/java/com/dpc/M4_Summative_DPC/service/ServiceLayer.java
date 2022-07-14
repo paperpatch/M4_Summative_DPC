@@ -120,8 +120,7 @@ public class ServiceLayer {
         tShirt.setDescription(tShirtViewModel.getDescription());
         tShirt.setPrice(tShirtViewModel.getPrice());
         tShirt.setQuantity(tShirtViewModel.getQuantity());
-
-        tShirtRepository.save(tShirt);
+   tShirtRepository.save(tShirt);
     }
     @Transactional
     public void removeTShirt(int id){
