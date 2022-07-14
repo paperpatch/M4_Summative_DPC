@@ -1,13 +1,7 @@
 package com.dpc.M4_Summative_DPC.service;
 
-import com.dpc.M4_Summative_DPC.models.Console;
-import com.dpc.M4_Summative_DPC.models.Game;
-import com.dpc.M4_Summative_DPC.repository.ConsoleRepository;
-import com.dpc.M4_Summative_DPC.models.SalesTaxRate;
-import com.dpc.M4_Summative_DPC.repository.GameRepository;
-import com.dpc.M4_Summative_DPC.models.TShirt;
-import com.dpc.M4_Summative_DPC.repository.SalesTaxRateRepository;
-import com.dpc.M4_Summative_DPC.repository.TShirtRepository;
+import com.dpc.M4_Summative_DPC.models.*;
+import com.dpc.M4_Summative_DPC.repository.*;
 import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,18 +18,18 @@ public class ServiceLayer {
 
     private TShirtRepository tShirtRepository;
     private GameRepository gameRepository;
-
     private ConsoleRepository consoleRepository;
-
     private SalesTaxRateRepository salesTaxRateRepository;
-
+    private ProcessingFeeRepository processingFeeRepository;
 
     @Autowired
-    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository, SalesTaxRateRepository salesTaxRateRepository) {
+    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository, SalesTaxRateRepository salesTaxRateRepository, ProcessingFeeRepository processingFeeRepository) {
         this.tShirtRepository = tShirtRepository;
         this.gameRepository = gameRepository;
         this.consoleRepository = consoleRepository;
         this.salesTaxRateRepository = salesTaxRateRepository;
+        this.processingFeeRepository = processingFeeRepository;
+
     }
 
     // Game CRUD
@@ -71,7 +65,6 @@ public class ServiceLayer {
     public void deleteConsole(int id){
         consoleRepository.deleteById(id);
     }
-
 
 
     //T-Shirt CRUD
@@ -141,7 +134,6 @@ public class ServiceLayer {
         return tvmList;
     }
 
-
     @Transactional
     public void updateTShirt(TShirtViewModel tShirtViewModel) {
         TShirt tShirt = new TShirt();
@@ -163,5 +155,10 @@ public class ServiceLayer {
     public SalesTaxRate findSalesTaxRateByState(String state) {
         return salesTaxRateRepository.findByState(state);
     }
+
+    // Processing Fee CRUD
+//    public ProcessingFee findProcessingFee(Invoice invoice) {
+//        return processingFeeRepository.findByProductType(invoice.<work to be done?>)
+//    }
 
 }

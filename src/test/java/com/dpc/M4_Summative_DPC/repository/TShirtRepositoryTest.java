@@ -36,5 +36,14 @@ public class TShirtRepositoryTest {
         assertFalse(tShirtList.isPresent());
     }
 
+    @Test
+    public void updateTShirt(){
+        testTShirt = tShirtRepository.save(testTShirt);
+        testTShirt.setSize("medium");
 
+        tShirtRepository.save(testTShirt);
+        Optional<TShirt> tShirtList = tShirtRepository.findById(testTShirt.getId());
+        assertEquals(tShirtList.get(),testTShirt);
+
+    }
 }
