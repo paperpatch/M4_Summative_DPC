@@ -16,13 +16,13 @@ public class Console {
     private String model;
     private String manufacturer;
     @Column(name = "memory_amount")
-    private Double memoryAmount;
+    private String memoryAmount;
     private String processor;
     private Double price;
     @NotEmpty
     private Integer quantity;
 
-    public Console(Integer consoleId, String model, String manufacturer, Double memoryAmount, String processor, Double price, Integer quantity) {
+    public Console(Integer consoleId, String model, String manufacturer, String memoryAmount, String processor, Double price, Integer quantity) {
         this.consoleId = consoleId;
         this.model = model;
         this.manufacturer = manufacturer;
@@ -59,11 +59,11 @@ public class Console {
         this.manufacturer = manufacturer;
     }
 
-    public Double getMemoryAmount() {
+    public String getMemoryAmount() {
         return memoryAmount;
     }
 
-    public void setMemoryAmount(Double memoryAmount) {
+    public void setMemoryAmount(String memoryAmount) {
         this.memoryAmount = memoryAmount;
     }
 

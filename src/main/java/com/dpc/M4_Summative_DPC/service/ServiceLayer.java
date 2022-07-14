@@ -1,38 +1,34 @@
 package com.dpc.M4_Summative_DPC.service;
 
-import com.dpc.M4_Summative_DPC.models.Console;
-import com.dpc.M4_Summative_DPC.models.Game;
-import com.dpc.M4_Summative_DPC.repository.ConsoleRepository;
-import com.dpc.M4_Summative_DPC.models.SalesTaxRate;
-import com.dpc.M4_Summative_DPC.repository.GameRepository;
-import com.dpc.M4_Summative_DPC.models.TShirt;
-import com.dpc.M4_Summative_DPC.repository.SalesTaxRateRepository;
-import com.dpc.M4_Summative_DPC.repository.TShirtRepository;
+import com.dpc.M4_Summative_DPC.models.*;
+import com.dpc.M4_Summative_DPC.repository.*;
 import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ServiceLayer {
 
     private TShirtRepository tShirtRepository;
     private GameRepository gameRepository;
-
     private ConsoleRepository consoleRepository;
-
     private SalesTaxRateRepository salesTaxRateRepository;
-
+    private ProcessingFeeRepository processingFeeRepository;
 
     @Autowired
-    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository) {
+    public ServiceLayer(TShirtRepository tShirtRepository, GameRepository gameRepository, ConsoleRepository consoleRepository, SalesTaxRateRepository salesTaxRateRepository, ProcessingFeeRepository processingFeeRepository) {
         this.tShirtRepository = tShirtRepository;
         this.gameRepository = gameRepository;
         this.consoleRepository = consoleRepository;
+        this.salesTaxRateRepository = salesTaxRateRepository;
+        this.processingFeeRepository = processingFeeRepository;
     }
 
     // Game CRUD
@@ -51,8 +47,11 @@ public class ServiceLayer {
     public void updateGame(Game game) { gameRepository.save(game); }
 
     public void deleteGame(int id) { gameRepository.deleteById(id); }
+
+//    Console
     public Console addConsole(Console console){
-        return consoleRepository.save(console);
+        console = consoleRepository.save(console);
+       return console;
     }
     public List<Console> getConsoleByManufacturer(String manufacturer) {
         return consoleRepository.findByManufacturer(manufacturer); }
@@ -63,12 +62,17 @@ public class ServiceLayer {
         return consoleRepository.findById(id);
     }
     public void updateConsole(Console console){
+//        if (console.getConsoleId() == null) {
+//            console.setConsoleId(id);
+//        } else if (console.getConsoleId() != id) {
+//
+//            throw new IllegalArgumentException("Invalid id, enter the correct id.");
+//        }
         consoleRepository.save(console);
     }
     public void deleteConsole(int id){
         consoleRepository.deleteById(id);
     }
-
 
 
     //T-Shirt CRUD
@@ -80,6 +84,9 @@ public class ServiceLayer {
         t.setDescription(tShirtViewModel.getDescription());
         t.setPrice(tShirtViewModel.getPrice());
         t.setQuantity(tShirtViewModel.getQuantity());
+
+        t = tShirtRepository.save(t);
+        tShirtViewModel.setId(t.getId());
 
         return tShirtViewModel;
     }
@@ -111,6 +118,30 @@ public class ServiceLayer {
         return tvmList;
     }
 
+    public List<TShirtViewModel> findAllTshirtByColor(String color){
+        List<TShirt> tShirtList = tShirtRepository.findByColor(color);
+        List<TShirtViewModel> tvmList = new ArrayList<>();
+
+        for(TShirt tShirt : tShirtList) {
+            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
+            tvmList.add(tvm);
+        }
+
+        return tvmList;
+    }
+
+    public List<TShirtViewModel> findAllTshirtBySize(String size){
+        List<TShirt> tShirtList = tShirtRepository.findBySize(size);
+        List<TShirtViewModel> tvmList = new ArrayList<>();
+
+        for(TShirt tShirt : tShirtList) {
+            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
+            tvmList.add(tvm);
+        }
+
+        return tvmList;
+    }
+
     @Transactional
     public void updateTShirt(TShirtViewModel tShirtViewModel) {
         TShirt tShirt = new TShirt();
@@ -131,5 +162,10 @@ public class ServiceLayer {
     public SalesTaxRate findSalesTaxRateByState(String state) {
         return salesTaxRateRepository.findByState(state);
     }
+
+    // Processing Fee CRUD
+//    public ProcessingFee findProcessingFee(Invoice invoice) {
+//        return processingFeeRepository.findByProductType(invoice.<work to be done?>)
+//    }
 
 }

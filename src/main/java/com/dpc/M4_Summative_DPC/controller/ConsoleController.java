@@ -28,11 +28,11 @@ public class ConsoleController {
         return service.getAllConsole();
     }
     //    Get console by manufacturer
-    @GetMapping("/console/manufacturer/{manufacturer")
+    @GetMapping("/console/manufacturer/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer) {
         if (service.getConsoleByManufacturer(manufacturer) == null) {
-            throw new NotFoundException("Game manufacturer not found in inventory.");
+            throw new NotFoundException("Manufacturer not found.");
         }
        return service.getConsoleByManufacturer(manufacturer);
     }
@@ -47,9 +47,9 @@ public class ConsoleController {
          return console.get();
     }
     //    Update a console
-    @PutMapping("console/{id}")
+    @PutMapping("console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAConsole(@PathVariable int id, @RequestBody Console console) {
+    public void updateAConsole(@RequestBody Console console) {
 //        if (console.getConsoleId() == null) {
 //            console.setConsoleId(id);
 //        } else if (console.getConsoleId() != id) {
