@@ -142,20 +142,13 @@ public class ServiceLayer {
     public Optional<Invoice> getInvoiceById(int id) { return invoiceRepository.findById(id); }
 
     public Invoice addInvoice(Invoice invoice) {
-        Invoice invoice1 = invoice;
-        double salesTax = invoice.getQuantity() * invoice.getUnitPrice();
+//        Invoice invoice1 = invoice;
+//        double salesTax = invoice.getQuantity() * invoice.getUnitPrice();
 
         return invoiceRepository.save(invoice);
     }
 
-    public void updateInvoice(Invoice invoice) { invoiceRepository.save(invoice); }
-
-    public void deleteInvoice(int id) { invoiceRepository.deleteById(id); }
-
     // Invoice View Modal CRUD
-
-
-
     @Transactional
     public InvoiceViewModel saveInvoiceModel(InvoiceViewModel invoiceViewModel){
         Invoice i = new Invoice();
@@ -168,7 +161,7 @@ public class ServiceLayer {
         i.setUnitPrice(invoiceViewModel.getUnitPrice());
         i.setQuantity(invoiceViewModel.getQuantity());
         i.setSubtotal(invoiceViewModel.getSubtotal());
-        i.setSaleTaxRate(invoiceViewModel.getTax());
+        i.setTax(invoiceViewModel.getTax());
         i.setProcessingFee(invoiceViewModel.getProcessingFee());
         i.setTotal(invoiceViewModel.getTotal());
         i.setItemId(invoiceViewModel.getGame().getId());
@@ -201,7 +194,7 @@ public class ServiceLayer {
         ivm.setUnitPrice(invoice.getUnitPrice());
         ivm.setQuantity(invoice.getQuantity());
         ivm.setSubtotal(invoice.getSubtotal());
-        ivm.setTax(invoice.getSaleTaxRate());
+        ivm.setTax(invoice.getTax());
         ivm.setProcessingFee(invoice.getProcessingFee());
         ivm.setTotal(invoice.getTotal());
         ivm.setItemId(invoice.getItemId());
@@ -282,9 +275,9 @@ public class ServiceLayer {
     }
 
 //     Processing Fee CRUD
-//    public ProcessingFee findProcessingFee(Invoice invoice) {
-//        return processingFeeRepository.findByProductType(invoice.<work to be done?>)
-//    }
+    public ProcessingFee findProcessingFee(Invoice invoice) {
+        return processingFeeRepository.findByProductType(invoice.getItemType());
+    }
 
     public void seedFees() {
         processingFeeRepository.save(new ProcessingFee("Games", 1.49));
