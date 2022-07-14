@@ -67,4 +67,15 @@ public class TShirtRepositoryTest {
         List<TShirt> tShirtList = tShirtRepository.findAll();
         assertEquals(tShirtList.size(),2) ;
     }
+
+    @Test
+    public void getAllTShirtByColor(){
+        assertEquals(tShirtRepository.findByColor("blue").size(), 1);
+    }
+
+    @Test
+    public void getAllTShirtBySize(){
+        assertEquals(tShirtRepository.findBySize("small").size(),1);
+    }
+
 }

@@ -69,81 +69,26 @@ public class ServiceLayer {
 
     //T-Shirt CRUD
     @Transactional
-    public TShirtViewModel saveTShirt(TShirtViewModel tShirtViewModel){
-        TShirt t = new TShirt();
-        t.setSize(tShirtViewModel.getSize());
-        t.setColor(tShirtViewModel.getColor());
-        t.setDescription(tShirtViewModel.getDescription());
-        t.setPrice(tShirtViewModel.getPrice());
-        t.setQuantity(tShirtViewModel.getQuantity());
-
-        t = tShirtRepository.save(t);
-        tShirtViewModel.setId(t.getId());
-
-        return tShirtViewModel;
+    public TShirt saveTShirt(TShirt tShirt){
+        return tShirtRepository.save(tShirt);
     }
-    public TShirtViewModel findATShirtById(int id){
-        Optional<TShirt> tShirt = tShirtRepository.findById(id);
-        return tShirt.isPresent()? buildTShirtViewModel(tShirt.get()) : null;
+    public Optional<TShirt> findATShirtById(int id){
+        return tShirtRepository.findById(id);
     }
-    private TShirtViewModel buildTShirtViewModel(TShirt tShirt) {
-        TShirtViewModel tvm = new TShirtViewModel();
-        tvm.setId(tShirt.getId());
-        tvm.setSize(tShirt.getSize());
-        tvm.setColor(tShirt.getColor());
-        tvm.setDescription(tShirt.getDescription());
-        tvm.setPrice(tShirt.getPrice());
-        tvm.setQuantity(tShirt.getQuantity());
-        ;
-        return tvm;
+    public List<TShirt> findAllTshirt(){
+        return tShirtRepository.findAll();
     }
 
-    public List<TShirtViewModel> findAllTshirt(){
-        List<TShirt> tShirtList = tShirtRepository.findAll();
-        List<TShirtViewModel> tvmList = new ArrayList<>();
-
-        for(TShirt tShirt : tShirtList) {
-            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
-            tvmList.add(tvm);
-        }
-
-        return tvmList;
+    public List<TShirt> findAllTshirtByColor(String color){
+        return tShirtRepository.findByColor(color);
     }
 
-    public List<TShirtViewModel> findAllTshirtByColor(String color){
-        List<TShirt> tShirtList = tShirtRepository.findByColor(color);
-        List<TShirtViewModel> tvmList = new ArrayList<>();
-
-        for(TShirt tShirt : tShirtList) {
-            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
-            tvmList.add(tvm);
-        }
-
-        return tvmList;
-    }
-
-    public List<TShirtViewModel> findAllTshirtBySize(String size){
-        List<TShirt> tShirtList = tShirtRepository.findBySize(size);
-        List<TShirtViewModel> tvmList = new ArrayList<>();
-
-        for(TShirt tShirt : tShirtList) {
-            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
-            tvmList.add(tvm);
-        }
-
-        return tvmList;
+    public List<TShirt> findAllTshirtBySize(String size){
+        return tShirtRepository.findBySize(size);
     }
 
     @Transactional
-    public void updateTShirt(TShirtViewModel tShirtViewModel) {
-        TShirt tShirt = new TShirt();
-        tShirt.setId(tShirtViewModel.getId());
-        tShirt.setSize(tShirtViewModel.getSize());
-        tShirt.setColor(tShirtViewModel.getColor());
-        tShirt.setDescription(tShirtViewModel.getDescription());
-        tShirt.setPrice(tShirtViewModel.getPrice());
-        tShirt.setQuantity(tShirtViewModel.getQuantity());
-
+    public void updateTShirt(TShirt tShirt) {
         tShirtRepository.save(tShirt);
     }
     @Transactional
