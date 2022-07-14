@@ -47,8 +47,11 @@ public class ServiceLayer {
     public void updateGame(Game game) { gameRepository.save(game); }
 
     public void deleteGame(int id) { gameRepository.deleteById(id); }
+
+//    Console
     public Console addConsole(Console console){
-        return consoleRepository.save(console);
+        console = consoleRepository.save(console);
+       return console;
     }
     public List<Console> getConsoleByManufacturer(String manufacturer) {
         return consoleRepository.findByManufacturer(manufacturer); }
@@ -59,6 +62,12 @@ public class ServiceLayer {
         return consoleRepository.findById(id);
     }
     public void updateConsole(Console console){
+//        if (console.getConsoleId() == null) {
+//            console.setConsoleId(id);
+//        } else if (console.getConsoleId() != id) {
+//
+//            throw new IllegalArgumentException("Invalid id, enter the correct id.");
+//        }
         consoleRepository.save(console);
     }
     public void deleteConsole(int id){
@@ -142,8 +151,7 @@ public class ServiceLayer {
         tShirt.setDescription(tShirtViewModel.getDescription());
         tShirt.setPrice(tShirtViewModel.getPrice());
         tShirt.setQuantity(tShirtViewModel.getQuantity());
-
-        tShirtRepository.save(tShirt);
+   tShirtRepository.save(tShirt);
     }
     @Transactional
     public void removeTShirt(int id){
