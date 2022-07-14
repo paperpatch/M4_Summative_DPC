@@ -19,21 +19,21 @@ public class Console {
     private String memoryAmount;
     private String processor;
     private Double price;
-    @NotEmpty
-    private Integer quantity;
+//    @NotEmpty
+    private int quantity;
 
-    public Console(Integer consoleId, String model, String manufacturer, String memoryAmount, String processor, Double price, Integer quantity) {
-        this.consoleId = consoleId;
-        this.model = model;
-        this.manufacturer = manufacturer;
-        this.memoryAmount = memoryAmount;
-        this.processor = processor;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-    public Console() {
-    }
+//    public Console(Integer consoleId, String model, String manufacturer, String memoryAmount, String processor, Double price, int quantity) {
+//        this.consoleId = consoleId;
+//        this.model = model;
+//        this.manufacturer = manufacturer;
+//        this.memoryAmount = memoryAmount;
+//        this.processor = processor;
+//        this.price = price;
+//        this.quantity = quantity;
+//    }
+//
+//    public Console() {
+//    }
 
     public Integer getConsoleId() {
         return consoleId;
@@ -83,11 +83,11 @@ public class Console {
         this.price = price;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -96,7 +96,7 @@ public class Console {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Console console = (Console) o;
-        return Objects.equals(consoleId, console.consoleId) && Objects.equals(model, console.model) && Objects.equals(manufacturer, console.manufacturer) && Objects.equals(memoryAmount, console.memoryAmount) && Objects.equals(processor, console.processor) && Objects.equals(price, console.price) && Objects.equals(quantity, console.quantity);
+        return quantity == console.quantity && Objects.equals(consoleId, console.consoleId) && Objects.equals(model, console.model) && Objects.equals(manufacturer, console.manufacturer) && Objects.equals(memoryAmount, console.memoryAmount) && Objects.equals(processor, console.processor) && Objects.equals(price, console.price);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Console {
                 "consoleId=" + consoleId +
                 ", model='" + model + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
-                ", memoryAmount=" + memoryAmount +
+                ", memoryAmount='" + memoryAmount + '\'' +
                 ", processor='" + processor + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +

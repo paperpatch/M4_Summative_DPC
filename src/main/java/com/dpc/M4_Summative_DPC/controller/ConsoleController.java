@@ -47,7 +47,7 @@ public class ConsoleController {
          return console.get();
     }
     //    Update a console
-    @PutMapping("console")
+    @PutMapping("/console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAConsole(@RequestBody Console console) {
 //        if (console.getConsoleId() == null) {
