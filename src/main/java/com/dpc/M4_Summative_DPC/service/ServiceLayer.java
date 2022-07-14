@@ -2,16 +2,15 @@ package com.dpc.M4_Summative_DPC.service;
 
 import com.dpc.M4_Summative_DPC.models.*;
 import com.dpc.M4_Summative_DPC.repository.*;
+import com.dpc.M4_Summative_DPC.viewmodel.InvoiceViewModel;
 import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class ServiceLayer {
@@ -40,7 +39,7 @@ public class ServiceLayer {
         consoleRepository.deleteAll();
         salesTaxRateRepository.deleteAll();
         processingFeeRepository.deleteAll();
-        // invoiceRepository.deleteAll();
+        invoiceRepository.deleteAll();
     }
 
     // Game CRUD
@@ -205,6 +204,77 @@ public class ServiceLayer {
     public void updateInvoice(Invoice invoice) { invoiceRepository.save(invoice); }
 
     public void deleteInvoice(int id) { invoiceRepository.deleteById(id); }
+
+    // Invoice View Modal CRUD
+
+
+
+    @Transactional
+    public InvoiceViewModel saveInvoiceModel(InvoiceViewModel invoiceViewModel){
+        Invoice i = new Invoice();
+        i.setName(invoiceViewModel.getName());
+        i.setStreet(invoiceViewModel.getStreet());
+        i.setCity(invoiceViewModel.getCity());
+        i.setState(invoiceViewModel.getState());
+        i.setZipCode(invoiceViewModel.getZipCode());
+        i.setItemType(invoiceViewModel.getItemType());
+        i.setUnitPrice(invoiceViewModel.getUnitPrice());
+        i.setQuantity(invoiceViewModel.getQuantity());
+        i.setSubtotal(invoiceViewModel.getSubtotal());
+        i.setSaleTaxRate(invoiceViewModel.getTax());
+        i.setProcessingFee(invoiceViewModel.getProcessingFee());
+        i.setTotal(invoiceViewModel.getTotal());
+        i.setItemId(invoiceViewModel.getGame().getId());
+        i.setItemId(invoiceViewModel.gettShirt().getId());
+        i.setItemId(invoiceViewModel.getConsole().getConsoleId());
+        i = invoiceRepository.save(i);
+        invoiceViewModel.setInvoiceId(i.getInvoiceId());
+
+        return invoiceViewModel;
+    }
+
+    public InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
+        // Get the associated games
+        Optional<Game> game = gameRepository.findById(invoice.getItemId());
+
+        // Get the associated consoles
+        Optional<Console> console = consoleRepository.findById(invoice.getItemId());
+
+        // Get the associated t-shirts
+        Optional<TShirt> tShirt = tShirtRepository.findById(invoice.getItemId());
+
+        // Assemble the AlbumViewModel
+        InvoiceViewModel ivm = new InvoiceViewModel();
+        ivm.setName(invoice.getName());
+        ivm.setStreet(invoice.getStreet());
+        ivm.setCity(invoice.getCity());
+        ivm.setState(invoice.getState());
+        ivm.setZipCode(invoice.getZipCode());
+        ivm.setItemType(invoice.getItemType());
+        ivm.setUnitPrice(invoice.getUnitPrice());
+        ivm.setQuantity(invoice.getQuantity());
+        ivm.setSubtotal(invoice.getSubtotal());
+        ivm.setTax(invoice.getSaleTaxRate());
+        ivm.setProcessingFee(invoice.getProcessingFee());
+        ivm.setTotal(invoice.getTotal());
+        ivm.setItemId(invoice.getItemId());
+
+        // Return the AlbumViewModel
+        return ivm;
+    }
+
+    public List<InvoiceViewModel> findAllInvoices() {
+        List<Invoice> invoiceList = invoiceRepository.findAll();
+
+        List<InvoiceViewModel> iList = new ArrayList<>();
+
+        for (Invoice invoice : invoiceList) {
+            InvoiceViewModel avm = buildInvoiceViewModel(invoice);
+            iList.add(avm);
+        }
+
+        return iList;
+    }
 
     // Sales Tax CRUD
     public SalesTaxRate findSalesTaxRateByState(String state) {

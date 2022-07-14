@@ -32,7 +32,7 @@ public class Invoice {
     @NotEmpty
     private int quantity;
     private double subtotal;
-    @Column(name= "sale_tax_rate")
+    @Column(name= "tax")
     private double tax;
     @Column(name= "processing_fee")
     private double processingFee;

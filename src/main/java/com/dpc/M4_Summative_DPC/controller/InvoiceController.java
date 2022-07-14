@@ -1,9 +1,8 @@
 package com.dpc.M4_Summative_DPC.controller;
 
-import com.dpc.M4_Summative_DPC.models.Game;
 import com.dpc.M4_Summative_DPC.models.Invoice;
-import com.dpc.M4_Summative_DPC.repository.InvoiceRepository;
 import com.dpc.M4_Summative_DPC.service.ServiceLayer;
+import com.dpc.M4_Summative_DPC.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,9 @@ public class InvoiceController {
     public List<Invoice> getAllInvoices() {
         return service.getAllInvoices();
     }
+
+    @GetMapping("/invoices")
+    public List<InvoiceViewModel> getAllInvoiceModels() { return service.findAllInvoices(); }
 
     // Get invoice by id
     @RequestMapping(value = "/invoice/{id}", method = RequestMethod.GET)
