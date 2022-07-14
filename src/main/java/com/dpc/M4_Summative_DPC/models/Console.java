@@ -2,6 +2,7 @@ package com.dpc.M4_Summative_DPC.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +19,7 @@ public class Console {
     private Double memoryAmount;
     private String processor;
     private Double price;
+    @NotEmpty
     private Integer quantity;
 
     public Console(Integer consoleId, String model, String manufacturer, Double memoryAmount, String processor, Double price, Integer quantity) {

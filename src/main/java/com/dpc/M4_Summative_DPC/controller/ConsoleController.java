@@ -32,7 +32,7 @@ public class ConsoleController {
     //    Get console by id
     @RequestMapping(value = "/console/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public Console getCConsoleById(@PathVariable int id) {
+    public Console getConsoleById(@PathVariable int id) {
         Optional<Console> console = consoleRepository.findById(id);
         if (!console.isPresent()) {
             throw new IllegalArgumentException("Invalid id, enter the correct id.");
