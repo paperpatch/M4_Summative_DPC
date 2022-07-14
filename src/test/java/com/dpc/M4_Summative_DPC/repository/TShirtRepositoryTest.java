@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -22,13 +23,18 @@ public class TShirtRepositoryTest {
     @Before
     public void setUp() throws Exception {
         tShirtRepository.deleteAll();
-        testTShirt = new TShirt("small", "blue", "blue unicorn", 14.99, 45);
-
+        testTShirt = new TShirt();
+        testTShirt.setSize("small");
+        testTShirt.setColor("blue");
+        testTShirt.setDescription("blue unicorn");
+        testTShirt.setPrice(14.99);
+        testTShirt.setQuantity(45);
+        testTShirt = tShirtRepository.save(testTShirt);
     }
 
     @Test
     public void addGetDeleteTShirt(){
-        testTShirt = tShirtRepository.save(testTShirt);
+//        testTShirt = tShirtRepository.save(testTShirt);
         Optional<TShirt> tShirtList = tShirtRepository.findById(testTShirt.getId());
         assertEquals(tShirtList.get(), testTShirt);
         tShirtRepository.deleteById(testTShirt.getId());
@@ -38,12 +44,27 @@ public class TShirtRepositoryTest {
 
     @Test
     public void updateTShirt(){
-        testTShirt = tShirtRepository.save(testTShirt);
+//        testTShirt = tShirtRepository.save(testTShirt);
         testTShirt.setSize("medium");
 
         tShirtRepository.save(testTShirt);
         Optional<TShirt> tShirtList = tShirtRepository.findById(testTShirt.getId());
         assertEquals(tShirtList.get(),testTShirt);
 
+    }
+
+    @Test
+    public void getAllTShirts(){
+        testTShirt = new TShirt();
+        testTShirt.setQuantity(86);
+        testTShirt.setPrice(18.99);
+        testTShirt.setDescription("blue unicorn");
+        testTShirt.setColor("white");
+        testTShirt.setSize("medium");
+
+        testTShirt = tShirtRepository.save(testTShirt);
+
+        List<TShirt> tShirtList = tShirtRepository.findAll();
+        assertEquals(tShirtList.size(),2) ;
     }
 }
