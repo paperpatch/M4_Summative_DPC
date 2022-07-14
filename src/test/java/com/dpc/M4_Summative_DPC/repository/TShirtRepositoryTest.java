@@ -34,7 +34,6 @@ public class TShirtRepositoryTest {
 
     @Test
     public void addGetDeleteTShirt(){
-//        testTShirt = tShirtRepository.save(testTShirt);
         Optional<TShirt> tShirtList = tShirtRepository.findById(testTShirt.getId());
         assertEquals(tShirtList.get(), testTShirt);
         tShirtRepository.deleteById(testTShirt.getId());
@@ -44,7 +43,6 @@ public class TShirtRepositoryTest {
 
     @Test
     public void updateTShirt(){
-//        testTShirt = tShirtRepository.save(testTShirt);
         testTShirt.setSize("medium");
 
         tShirtRepository.save(testTShirt);
