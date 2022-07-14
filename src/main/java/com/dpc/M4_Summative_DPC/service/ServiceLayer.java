@@ -11,11 +11,13 @@ import com.dpc.M4_Summative_DPC.repository.TShirtRepository;
 import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ServiceLayer {
@@ -81,6 +83,9 @@ public class ServiceLayer {
         t.setPrice(tShirtViewModel.getPrice());
         t.setQuantity(tShirtViewModel.getQuantity());
 
+        t = tShirtRepository.save(t);
+        tShirtViewModel.setId(t.getId());
+
         return tShirtViewModel;
     }
     public TShirtViewModel findATShirtById(int id){
@@ -110,6 +115,31 @@ public class ServiceLayer {
 
         return tvmList;
     }
+
+    public List<TShirtViewModel> findAllTshirtByColor(String color){
+        List<TShirt> tShirtList = tShirtRepository.findByColor(color);
+        List<TShirtViewModel> tvmList = new ArrayList<>();
+
+        for(TShirt tShirt : tShirtList) {
+            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
+            tvmList.add(tvm);
+        }
+
+        return tvmList;
+    }
+
+    public List<TShirtViewModel> findAllTshirtBySize(String size){
+        List<TShirt> tShirtList = tShirtRepository.findBySize(size);
+        List<TShirtViewModel> tvmList = new ArrayList<>();
+
+        for(TShirt tShirt : tShirtList) {
+            TShirtViewModel tvm = buildTShirtViewModel(tShirt);
+            tvmList.add(tvm);
+        }
+
+        return tvmList;
+    }
+
 
     @Transactional
     public void updateTShirt(TShirtViewModel tShirtViewModel) {
