@@ -31,6 +31,17 @@ public class ServiceLayer {
         this.processingFeeRepository = processingFeeRepository;
     }
 
+    // Clear Database
+
+    public void clearDatabase() {
+        gameRepository.deleteAll();
+        tShirtRepository.deleteAll();
+        consoleRepository.deleteAll();
+        salesTaxRateRepository.deleteAll();
+        processingFeeRepository.deleteAll();
+        // invoiceRepository.deleteAll();
+    }
+
     // Game CRUD
     public List<Game> getAllGames() {return gameRepository.findAll(); }
 
@@ -50,21 +61,27 @@ public class ServiceLayer {
     public Console addConsole(Console console){
         return consoleRepository.save(console);
     }
+
+    // Console CRUD
     public List<Console> getConsoleByManufacturer(String manufacturer) {
-        return consoleRepository.findByManufacturer(manufacturer); }
+        return consoleRepository.findByManufacturer(manufacturer);
+
+    }
     public List<Console> getAllConsole (){
         return consoleRepository.findAll();
     }
+
     public Optional<Console> getConsoleById(int id) {
         return consoleRepository.findById(id);
     }
+
     public void updateConsole(Console console){
         consoleRepository.save(console);
     }
+
     public void deleteConsole(int id){
         consoleRepository.deleteById(id);
     }
-
 
     //T-Shirt CRUD
     @Transactional
@@ -155,9 +172,68 @@ public class ServiceLayer {
         return salesTaxRateRepository.findByState(state);
     }
 
-    // Processing Fee CRUD
+    public void seedTaxes() {
+        salesTaxRateRepository.save(new SalesTaxRate("AL", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("AK", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("AZ", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("AR", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("CA", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("CO", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("CT", 0.03));
+        salesTaxRateRepository.save(new SalesTaxRate("DE", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("FL", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("GA", 0.07));
+        salesTaxRateRepository.save(new SalesTaxRate("HI", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("ID", 0.03));
+        salesTaxRateRepository.save(new SalesTaxRate("IL", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("IN", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("IA", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("KS", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("KY", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("LA", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("ME", 0.03));
+        salesTaxRateRepository.save(new SalesTaxRate("MD", 0.07));
+        salesTaxRateRepository.save(new SalesTaxRate("MA", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("MI", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("MN", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("MS", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("MO", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("MT", 0.03));
+        salesTaxRateRepository.save(new SalesTaxRate("NE", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("NV", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("NH", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("NJ", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("NM", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("NY", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("NC", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("ND", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("OH", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("OK", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("OR", 0.07));
+        salesTaxRateRepository.save(new SalesTaxRate("PA", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("RI", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("SC", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("SD", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("TN", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("TX", 0.03));
+        salesTaxRateRepository.save(new SalesTaxRate("UT", 0.04));
+        salesTaxRateRepository.save(new SalesTaxRate("VT", 0.07));
+        salesTaxRateRepository.save(new SalesTaxRate("VA", 0.06));
+        salesTaxRateRepository.save(new SalesTaxRate("WA", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("WV", 0.05));
+        salesTaxRateRepository.save(new SalesTaxRate("WI", 0.03));
+        salesTaxRateRepository.save(new SalesTaxRate("WY", 0.04));
+    }
+
+//     Processing Fee CRUD
 //    public ProcessingFee findProcessingFee(Invoice invoice) {
 //        return processingFeeRepository.findByProductType(invoice.<work to be done?>)
 //    }
+
+    public void seedFees() {
+        processingFeeRepository.save(new ProcessingFee("Games", 1.49));
+        processingFeeRepository.save(new ProcessingFee("Consoles", 14.99));
+        processingFeeRepository.save(new ProcessingFee("TShirts", 1.99));
+    }
 
 }
