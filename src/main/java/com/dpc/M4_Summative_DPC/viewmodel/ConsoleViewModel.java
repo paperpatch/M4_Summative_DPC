@@ -1,15 +1,21 @@
 package com.dpc.M4_Summative_DPC.viewmodel;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class ConsoleViewModel {
         private  Integer consoleId;
+    @NotEmpty(message = "You must enter a size")
         private String model;
+    @NotEmpty(message = "You must enter a size")
         private String manufacturer;
+    @NotEmpty(message = "You must enter a size")
 
         private Double memoryAmount;
+    @NotEmpty(message = "You must enter a size")
         private String processor;
         private Double price;
+    @NotEmpty(message = "You must enter a size")
         private Integer quantity;
 
         public Integer getConsoleId() {
