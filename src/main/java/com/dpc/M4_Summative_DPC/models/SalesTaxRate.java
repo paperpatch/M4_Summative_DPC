@@ -21,6 +21,11 @@ public class SalesTaxRate {
     public SalesTaxRate() {
     }
 
+    public SalesTaxRate(String state, double rate) {
+        this.state = state;
+        this.rate = rate;
+    }
+
     public SalesTaxRate(int id, String state, double rate) {
         this.id = id;
         this.state = state;

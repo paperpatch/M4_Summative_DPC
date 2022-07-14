@@ -21,13 +21,13 @@ public class ProcessingFee {
     public ProcessingFee() {
     }
 
-    public ProcessingFee(int id, String productType, double fee) {
-        this.id = id;
+    public ProcessingFee(String productType, double fee) {
         this.productType = productType;
         this.fee = fee;
     }
 
-    public ProcessingFee(String productType, double fee) {
+    public ProcessingFee(int id, String productType, double fee) {
+        this.id = id;
         this.productType = productType;
         this.fee = fee;
     }
