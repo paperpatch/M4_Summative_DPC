@@ -19,7 +19,7 @@ public class ConsoleController {
     // Create a console
     @PostMapping("/console")
     @ResponseStatus(HttpStatus.CREATED)
-    public Console createConsole(@RequestBody @Valid Console console) {
+    public Console createConsole(@RequestBody Console console) {
         return service.addConsole(console);
     }
     //    Get all console
@@ -34,8 +34,10 @@ public class ConsoleController {
     public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer) {
         if (service.getConsoleByManufacturer(manufacturer) == null) {
             throw new NotFoundException("Manufacturer not found.");
+        } else if(service.getConsoleByManufacturer(manufacturer).isEmpty()){
+            throw new IllegalArgumentException("Enter a valid manufacturer.");
         }
-       return service.getConsoleByManufacturer(manufacturer);
+        return service.getConsoleByManufacturer(manufacturer);
     }
     //    Get console by id
     @GetMapping("/console/{id}")
@@ -43,14 +45,14 @@ public class ConsoleController {
     public Console getConsoleById(@PathVariable int id) {
         Optional<Console> console = service.getConsoleById(id);
         if (!console.isPresent()) {
-            throw new IllegalArgumentException("Invalid id, enter the correct id.");
+            throw new NotFoundException("Invalid id, enter the correct id.");
         }
          return console.get();
     }
     //    Update a console
     @PutMapping("/console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAConsole(@RequestBody @Valid Console console) {
+    public void updateAConsole(@RequestBody Console console) {
 //        if (console.getConsoleId() == null) {
 //            console.setConsoleId(id);
 //        } else if (console.getConsoleId() != id) {

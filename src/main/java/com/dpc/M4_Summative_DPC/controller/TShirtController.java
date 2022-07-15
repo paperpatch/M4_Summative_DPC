@@ -50,11 +50,12 @@ public class TShirtController {
 
     @GetMapping("/tshirt/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<TShirt> findTShirtById(@PathVariable int id) throws Exception{
-        if(serviceLayer.findATShirtById(id) == null) {
-            throw new NotFoundException("no t-shirt found!");
+    public TShirt findTShirtById(@PathVariable int id) throws Exception{
+        Optional<TShirt> tshirt = serviceLayer.findATShirtById(id);
+        if(!tshirt.isPresent()) {
+            throw new NotFoundException("Could not found, enter the correct id.!");
         }
-       return serviceLayer.findATShirtById(id);
+       return tshirt.get();
     }
 
     @PutMapping("/tshirt/{id}")

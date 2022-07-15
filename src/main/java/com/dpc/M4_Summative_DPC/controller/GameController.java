@@ -45,12 +45,12 @@ public class GameController {
     @GetMapping("/games/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Game getGameById(@PathVariable int id) {
-        Optional<Game> returnVal = service.getGameById(id);
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        } else {
-            return null;
+        Optional<Game> game = service.getGameById(id);
+            if (!game.isPresent()) {
+            throw new NotFoundException("Invalid id, enter the correct id.");
         }
+            return game.get();
+
     }
 
     @GetMapping("/games/title/{title}")
