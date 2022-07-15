@@ -33,7 +33,7 @@ public class TShirtController {
     @GetMapping("/tshirt/color/{color}")
     @ResponseStatus(HttpStatus.OK)
     public List<TShirt> getAllTShirtByColor(@PathVariable("color") String color) {
-        if(serviceLayer.findAllTshirtByColor(color) == null){
+        if(serviceLayer.findAllTshirtByColor(color).isEmpty()){
             throw new NotFoundException("no t-shirt left with this color");
         }
         return serviceLayer.findAllTshirtByColor(color);
@@ -42,7 +42,7 @@ public class TShirtController {
     @GetMapping("/tshirt/size/{size}")
     @ResponseStatus(HttpStatus.OK)
     public List<TShirt> getAllTShirtBySize(@PathVariable("size")String size) {
-        if(serviceLayer.findAllTshirtByColor(size) == null){
+        if(serviceLayer.findAllTshirtByColor(size).isEmpty()){
             throw new NotFoundException("no t-shirt left with this size");
         }
         return serviceLayer.findAllTshirtBySize(size);
