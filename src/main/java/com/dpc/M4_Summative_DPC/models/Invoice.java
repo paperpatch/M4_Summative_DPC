@@ -39,6 +39,16 @@ public class Invoice {
     public Invoice() {
     }
 
+    public Invoice(String name, String street, String city, String state, String zipCode, String itemType, int itemId) {
+        this.name = name;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.itemType = itemType;
+        this.itemId = itemId;
+    }
+
     public Invoice(String name, String street, String city, String state, String zipCode, String itemType, int itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total) {
         this.name = name;
         this.street = street;
