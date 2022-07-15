@@ -33,7 +33,7 @@ public class GameRepositoryTest {
     }
 
     @Test
-    public void addGetDeleteGame(){
+    public void shouldAddAndDeleteGame(){
         Optional<Game> gameList = gameRepository.findById(testGame.getId());
         assertEquals(gameList.get(), testGame);
         gameRepository.deleteById(testGame.getId());
@@ -42,16 +42,15 @@ public class GameRepositoryTest {
     }
 
     @Test
-    public void updateGame(){
+    public void shouldUpdateGame(){
         testGame.setStudio("Blizzard");
-
         gameRepository.save(testGame);
         Optional<Game> gameList = gameRepository.findById(testGame.getId());
         assertEquals(gameList.get(), testGame);
     }
 
     @Test
-    public void getAllGames(){
+    public void shouldGetAllGames(){
         testGame = new Game();
         testGame.setTitle("Neighbours from Heaven");
         testGame.setEsrbRating("E");
@@ -67,17 +66,17 @@ public class GameRepositoryTest {
     }
 
     @Test
-    public void getGameByTitle(){
+    public void shouldGetGameByTitle(){
         assertEquals(gameRepository.findByTitle("Neighbours from Hell").get().getTitle(), testGame.getTitle());
     }
 
     @Test
-    public void getAllGamesByEsrbRating(){
+    public void shouldGetAllGamesByEsrbRating(){
         assertEquals(gameRepository.findByEsrbRating("E").size(), 1);
     }
 
     @Test
-    public void getAllGamesByStudio(){
+    public void shouldGetAllGamesByStudio(){
         assertEquals(gameRepository.findByStudio("JoWooD Productions").size(), 1);
     }
 
