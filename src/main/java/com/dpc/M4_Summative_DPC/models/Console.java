@@ -12,7 +12,7 @@ public class Console {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id")
-    private  Integer consoleId;
+    private Integer consoleId;
     private String model;
     private String manufacturer;
     @Column(name = "memory_amount")

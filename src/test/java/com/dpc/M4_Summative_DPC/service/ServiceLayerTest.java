@@ -54,8 +54,9 @@ public class ServiceLayerTest {
 
         List<TShirt> tList = new ArrayList<>();
         tList.add(tshirt);
+        tList.add(tshirt2);
 
-        doReturn(tshirt).when(tShirtRepository).save(tshirt2);
+        doReturn(tshirt).when(tShirtRepository).save(tshirt);
         doReturn(Optional.of(tshirt)).when(tShirtRepository).findById(1);
         doReturn(tList).when(tShirtRepository).findAll();
     }
@@ -79,6 +80,14 @@ public class ServiceLayerTest {
         game2.setPrice(49.00);
         game2.setStudio("Warner Bros. Interactive Entertainment");
         game2.setQuantity(50);
+
+        List<Game> gList = new ArrayList<>();
+        gList.add(game);
+        gList.add(game2);
+
+        doReturn(game).when(gameRepository).save(game);
+        doReturn(Optional.of(game)).when(gameRepository).findById(1);
+        doReturn(gList).when(gameRepository).findAll();
     }
 
     private void setUpConsoleRepositoryMock() {
@@ -100,6 +109,14 @@ public class ServiceLayerTest {
         console2.setProcessor("AMD Zen 2-CPU");
         console2.setPrice(499.99);
         console2.setQuantity(10);
+
+        List<Console> cList = new ArrayList<>();
+        cList.add(console);
+        cList.add(console2);
+
+        doReturn(console).when(consoleRepository).save(console);
+        doReturn(Optional.of(console)).when(consoleRepository).findById(1);
+        doReturn(cList).when(consoleRepository).findAll();
     }
 
     private void setUpInvoiceRepositoryMock() {
@@ -114,15 +131,6 @@ public class ServiceLayerTest {
         invoice.setItemId(1);
         invoice.setQuantity(2);
 
-        gameRepository = mock(GameRepository.class);
-        Game game = new Game();
-        game.setId(1);
-        game.setTitle("Elden Ring");
-        game.setEsrbRating("M (Mature 17+)");
-        game.setDescription("Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.");
-        game.setPrice(59.95);
-        game.setStudio("FromSoftware Inc.");
-        game.setQuantity(50);
     }
 
     private void setUpSalesTaxRateRepositoryMock() {
@@ -142,8 +150,21 @@ public class ServiceLayerTest {
     }
 
     @Test
-    public void shouldFindTShirts() {
-        List<TShirt> tShirtList = service.findAllTshirt();
-        assertEquals(1, tShirtList.size());
+    public void serviceShouldGetAllGames() {
+        List<Game> gameList = service.getAllGames();
+        assertEquals(2, gameList.size());
     }
+
+    @Test
+    public void serviceShouldFindAllTShirts() {
+        List<TShirt> tShirtList = service.findAllTshirt();
+        assertEquals(2, tShirtList.size());
+    }
+
+    @Test
+    public void serviceShouldGetAllConsoles() {
+        List<Console> consoleList = service.getAllConsole();
+        assertEquals(2, consoleList.size());
+    }
+
 }

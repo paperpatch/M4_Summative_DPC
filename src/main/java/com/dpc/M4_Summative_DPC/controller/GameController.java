@@ -2,6 +2,7 @@ package com.dpc.M4_Summative_DPC.controller;
 
 import com.dpc.M4_Summative_DPC.exceptions.NotFoundException;
 import com.dpc.M4_Summative_DPC.models.Game;
+import com.dpc.M4_Summative_DPC.models.TShirt;
 import com.dpc.M4_Summative_DPC.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class GameController {
 
     @GetMapping("/games")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> getGames(@RequestParam(required=false) String title, @RequestParam(required = false) String esrbRating, @RequestParam(required = false) String studio) {
+    public List<Game> getAllGames(@RequestParam(required=false) String title, @RequestParam(required = false) String esrbRating, @RequestParam(required = false) String studio) {
         List<Game> returnList = service.getAllGames();
         if (title != null) {
             returnList = returnList.stream()
