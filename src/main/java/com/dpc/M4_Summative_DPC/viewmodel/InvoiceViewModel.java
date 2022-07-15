@@ -1,15 +1,19 @@
 package com.dpc.M4_Summative_DPC.viewmodel;
 
-import com.dpc.M4_Summative_DPC.models.Console;
-import com.dpc.M4_Summative_DPC.models.Game;
-import com.dpc.M4_Summative_DPC.models.TShirt;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "invoiceModel")
 public class InvoiceViewModel {
-    private int invoiceId;
+    @Id
+    @Column(name = "invoiceModel_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotEmpty(message = "You must enter a name")
     private String name;
     @NotEmpty(message = "You must enter a street")
@@ -52,8 +56,8 @@ public class InvoiceViewModel {
         this.total = total;
     }
 
-    public InvoiceViewModel(int invoiceId, String name, String street, String city, String state, String zipCode, String itemType, Integer itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total) {
-        this.invoiceId = invoiceId;
+    public InvoiceViewModel(int id, String name, String street, String city, String state, String zipCode, String itemType, Integer itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total) {
+        this.id = id;
         this.name = name;
         this.street = street;
         this.city = city;
@@ -69,12 +73,12 @@ public class InvoiceViewModel {
         this.total = total;
     }
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getId() {
+        return id;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -186,18 +190,18 @@ public class InvoiceViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InvoiceViewModel that = (InvoiceViewModel) o;
-        return invoiceId == that.invoiceId && Double.compare(that.unitPrice, unitPrice) == 0 && quantity == that.quantity && Double.compare(that.subtotal, subtotal) == 0 && Double.compare(that.tax, tax) == 0 && Double.compare(that.processingFee, processingFee) == 0 && Double.compare(that.total, total) == 0 && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(zipCode, that.zipCode) && Objects.equals(itemType, that.itemType) && Objects.equals(itemId, that.itemId);
+        return id == that.id && Double.compare(that.unitPrice, unitPrice) == 0 && quantity == that.quantity && Double.compare(that.subtotal, subtotal) == 0 && Double.compare(that.tax, tax) == 0 && Double.compare(that.processingFee, processingFee) == 0 && Double.compare(that.total, total) == 0 && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(zipCode, that.zipCode) && Objects.equals(itemType, that.itemType) && Objects.equals(itemId, that.itemId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoiceId, name, street, city, state, zipCode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
+        return Objects.hash(id, name, street, city, state, zipCode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
     }
 
     @Override
     public String toString() {
         return "InvoiceViewModel{" +
-                "invoiceId=" + invoiceId +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +

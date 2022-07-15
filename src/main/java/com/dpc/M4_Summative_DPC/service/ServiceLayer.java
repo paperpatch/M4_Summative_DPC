@@ -253,6 +253,10 @@ public class ServiceLayer {
         }
     };
 
+    public void updateInvoice(Invoice invoice) { invoiceRepository.save(invoice); }
+
+    public void deleteInvoice(int id) { invoiceRepository.deleteById(id); }
+
     // Invoice View Modal CRUD
     @Transactional
     public InvoiceViewModel saveInvoiceModel(InvoiceViewModel invoiceViewModel){
@@ -270,7 +274,7 @@ public class ServiceLayer {
         i.setProcessingFee(invoiceViewModel.getProcessingFee());
         i.setTotal(invoiceViewModel.getTotal());
         i = invoiceRepository.save(i);
-        invoiceViewModel.setInvoiceId(i.getInvoiceId());
+        invoiceViewModel.setId(i.getId());
 
         return invoiceViewModel;
     }
@@ -287,6 +291,7 @@ public class ServiceLayer {
 
         // Assemble the AlbumViewModel
         InvoiceViewModel ivm = new InvoiceViewModel();
+        ivm.setId(invoice.getId());
         ivm.setName(invoice.getName());
         ivm.setStreet(invoice.getStreet());
         ivm.setCity(invoice.getCity());

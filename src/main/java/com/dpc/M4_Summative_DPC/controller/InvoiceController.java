@@ -35,34 +35,23 @@ public class InvoiceController {
         return service.getInvoiceById(id);
     }
     // Create Invoice
-    @RequestMapping(value = "/invoice", method = RequestMethod.POST)
+    @RequestMapping(value = "/invoices", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoiceViewModel) {
         return service.saveInvoiceModel(invoiceViewModel);
     }
 
-//    // Update Invoice
-//    @RequestMapping(value = "invoice/{id}", method = RequestMethod.PUT)
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateInvoice(@PathVariable int id, @RequestBody Invoice invoice) {
-//        if (invoice.getInvoiceId() == null) {
-//            invoice.setInvoiceId(id);
-//        } else if (invoice.getInvoiceId() != id) {
-//
-//            throw new IllegalArgumentException("Invalid id, enter the correct id.");
-//        }
-//        service.updateInvoice(invoice);
-//    }
-//    @PutMapping("/invoice")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateInvoice2(@RequestBody Invoice invoice) {
-//        service.updateInvoice(invoice);
-//    }
-//
-//    //    Delete invoice
-//    @RequestMapping(value = "/invoice/{id}", method = RequestMethod.DELETE)
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void destroyInvoice(@PathVariable int id) {
-//        service.deleteInvoice(id);
-//    }
+    // Update Invoice
+    @PutMapping("/invoices")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateInvoice2(@RequestBody Invoice invoice) {
+        service.updateInvoice(invoice);
+    }
+
+    //    Delete invoice
+    @RequestMapping(value = "/invoices/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void destroyInvoice(@PathVariable int id) {
+        service.deleteInvoice(id);
+    }
 }
