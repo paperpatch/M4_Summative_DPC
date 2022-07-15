@@ -67,9 +67,9 @@ public class ServiceLayer {
     }
 
     public void seedGames() {
-        gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 1));
-        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 2));
-        gameRepository.save(new Game("Among Us", "E (Everyone)", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 5));
+        gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 50));
+        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 100));
+        gameRepository.save(new Game("Among Us", "E (Everyone)", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 73));
     }
 
     // Console CRUD
@@ -143,19 +143,119 @@ public class ServiceLayer {
 
     public Invoice addInvoice(Invoice invoice) {
         Invoice invoice1 = invoice;
-        double salesTax = invoice.getQuantity() * invoice.getUnitPrice();
+        double unitPrice = getUnitPrice(invoice);
+        double subtotal = calculateSubtotal(invoice, unitPrice);
+        double salesTax = calculateTaxRate(invoice, unitPrice);
+        double processingFee = calculateProcessingFee(invoice);
+        double total = calculateTotal(salesTax, processingFee, subtotal);
 
-        return invoiceRepository.save(invoice);
+        calculateQuantity(invoice1);
+
+        invoice1.setUnitPrice(unitPrice);
+        invoice1.setSubtotal(subtotal);
+        invoice1.setTax(salesTax);
+        invoice1.setProcessingFee(processingFee);
+        invoice1.setTotal(total);
+
+        return invoiceRepository.save(invoice1);
     }
+
+    public double getUnitPrice(Invoice invoice) {
+        switch (invoice.getItemType().toLowerCase()) {
+            case "games":
+                Game game = getGameById(invoice.getItemId()).get();
+                return game.getPrice();
+            case "consoles":
+                Console console = getConsoleById(invoice.getItemId()).get();
+                return console.getPrice();
+            case "tshirt":
+                TShirt tshirt = findATShirtById(invoice.getItemId()).get();
+                return tshirt.getPrice();
+            default:
+                return 0;
+        }
+    }
+
+    public double calculateSubtotal(Invoice invoice, double unitPrice) {
+        return formatDouble(invoice.getQuantity()  * unitPrice);
+    }
+
+    public double calculateTaxRate(Invoice invoice, double unitPrice) {
+        double subtotal = calculateSubtotal(invoice, unitPrice);
+        double rate = salesTaxRateRepository.findByState(invoice.getState()).getRate();
+        return formatDouble(subtotal * rate);
+    }
+
+    // https://mkyong.com/java/how-to-format-a-double-in-java/
+    public double formatDouble(double d) {
+        return Double.parseDouble(String.format("%,.2f", d));
+    }
+
+    public double calculateProcessingFee(Invoice invoice) {
+        double processingFee = processingFeeRepository.findByProductType(invoice.getItemType()).getFee();
+        if (invoice.getQuantity() > 10) {
+            processingFee += 15.49;
+        }
+        return processingFee;
+    }
+
+    public double calculateTotal(double salesTax, double processingFee, double subTotal) {
+        return salesTax + processingFee + subTotal;
+    }
+
+    public void calculateQuantity(Invoice invoice) {
+        int quantity = invoice.getQuantity();
+        if (quantity <= 0) {
+            throw new IndexOutOfBoundsException("Quantity purchased must be greater than zero.");
+        }
+
+        int availableQuantity = 0;
+        int updateQuantity = 0;
+
+        switch (invoice.getItemType().toLowerCase()) {
+            case "games":
+                Game game = getGameById(invoice.getItemId()).get();
+
+                availableQuantity = game.getQuantity();
+                if (availableQuantity < quantity) {
+                    throw new IllegalArgumentException("Not enough stock in the inventory.");
+                }
+
+                updateQuantity = availableQuantity - quantity;
+                game.setQuantity(updateQuantity);
+                updateGame(game);
+                break;
+            case "consoles":
+                Console console = getConsoleById(invoice.getItemId()).get();
+
+                availableQuantity = console.getQuantity();
+                if (availableQuantity < quantity) {
+                    throw new IllegalArgumentException("Not enough stock in the inventory.");
+                }
+
+                updateQuantity = availableQuantity - quantity;
+                console.setQuantity(updateQuantity);
+                updateConsole(console);
+                break;
+            case "tshirt":
+                TShirt tshirt = findATShirtById(invoice.getItemId()).get();
+                availableQuantity = tshirt.getQuantity();
+                if (availableQuantity < quantity) {
+                    throw new IllegalArgumentException("Not enough stock in the inventory.");
+                }
+
+                updateQuantity = availableQuantity - quantity;
+                tshirt.setQuantity(updateQuantity);
+                updateTShirt(tshirt);
+                break;
+        }
+    };
 
     public void updateInvoice(Invoice invoice) { invoiceRepository.save(invoice); }
 
     public void deleteInvoice(int id) { invoiceRepository.deleteById(id); }
 
     // Invoice View Modal CRUD
-
-
-
     @Transactional
     public InvoiceViewModel saveInvoiceModel(InvoiceViewModel invoiceViewModel){
         Invoice i = new Invoice();
@@ -168,14 +268,11 @@ public class ServiceLayer {
         i.setUnitPrice(invoiceViewModel.getUnitPrice());
         i.setQuantity(invoiceViewModel.getQuantity());
         i.setSubtotal(invoiceViewModel.getSubtotal());
-        i.setSaleTaxRate(invoiceViewModel.getTax());
+        i.setTax(invoiceViewModel.getTax());
         i.setProcessingFee(invoiceViewModel.getProcessingFee());
         i.setTotal(invoiceViewModel.getTotal());
-        i.setItemId(invoiceViewModel.getGame().getId());
-        i.setItemId(invoiceViewModel.gettShirt().getId());
-        i.setItemId(invoiceViewModel.getConsole().getConsoleId());
         i = invoiceRepository.save(i);
-        invoiceViewModel.setInvoiceId(i.getInvoiceId());
+        invoiceViewModel.setId(i.getId());
 
         return invoiceViewModel;
     }
@@ -192,6 +289,7 @@ public class ServiceLayer {
 
         // Assemble the AlbumViewModel
         InvoiceViewModel ivm = new InvoiceViewModel();
+        ivm.setId(invoice.getId());
         ivm.setName(invoice.getName());
         ivm.setStreet(invoice.getStreet());
         ivm.setCity(invoice.getCity());
@@ -201,7 +299,7 @@ public class ServiceLayer {
         ivm.setUnitPrice(invoice.getUnitPrice());
         ivm.setQuantity(invoice.getQuantity());
         ivm.setSubtotal(invoice.getSubtotal());
-        ivm.setTax(invoice.getSaleTaxRate());
+        ivm.setTax(invoice.getTax());
         ivm.setProcessingFee(invoice.getProcessingFee());
         ivm.setTotal(invoice.getTotal());
         ivm.setItemId(invoice.getItemId());
@@ -282,9 +380,9 @@ public class ServiceLayer {
     }
 
 //     Processing Fee CRUD
-//    public ProcessingFee findProcessingFee(Invoice invoice) {
-//        return processingFeeRepository.findByProductType(invoice.<work to be done?>)
-//    }
+    public ProcessingFee findProcessingFee(Invoice invoice) {
+        return processingFeeRepository.findByProductType(invoice.getItemType());
+    }
 
     public void seedFees() {
         processingFeeRepository.save(new ProcessingFee("Games", 1.49));

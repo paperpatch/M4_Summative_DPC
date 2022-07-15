@@ -1,15 +1,19 @@
 package com.dpc.M4_Summative_DPC.viewmodel;
 
-import com.dpc.M4_Summative_DPC.models.Console;
-import com.dpc.M4_Summative_DPC.models.Game;
-import com.dpc.M4_Summative_DPC.models.TShirt;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "invoiceModel")
 public class InvoiceViewModel {
-    private int invoiceId;
+    @Id
+    @Column(name = "invoiceModel_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotEmpty(message = "You must enter a name")
     private String name;
     @NotEmpty(message = "You must enter a street")
@@ -33,14 +37,10 @@ public class InvoiceViewModel {
     private double processingFee;
     private double total;
 
-    private Game game;
-    private TShirt tShirt;
-    private Console console;
-
     public InvoiceViewModel() {
     }
 
-    public InvoiceViewModel(String name, String street, String city, String state, String zipCode, String itemType, Integer itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total, Game game, TShirt tShirt, Console console) {
+    public InvoiceViewModel(String name, String street, String city, String state, String zipCode, String itemType, Integer itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total) {
         this.name = name;
         this.street = street;
         this.city = city;
@@ -54,13 +54,10 @@ public class InvoiceViewModel {
         this.tax = tax;
         this.processingFee = processingFee;
         this.total = total;
-        this.game = game;
-        this.tShirt = tShirt;
-        this.console = console;
     }
 
-    public InvoiceViewModel(int invoiceId, String name, String street, String city, String state, String zipCode, String itemType, Integer itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total, Game game, TShirt tShirt, Console console) {
-        this.invoiceId = invoiceId;
+    public InvoiceViewModel(int id, String name, String street, String city, String state, String zipCode, String itemType, Integer itemId, double unitPrice, int quantity, double subtotal, double tax, double processingFee, double total) {
+        this.id = id;
         this.name = name;
         this.street = street;
         this.city = city;
@@ -74,17 +71,14 @@ public class InvoiceViewModel {
         this.tax = tax;
         this.processingFee = processingFee;
         this.total = total;
-        this.game = game;
-        this.tShirt = tShirt;
-        this.console = console;
     }
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getId() {
+        return id;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -191,47 +185,23 @@ public class InvoiceViewModel {
         this.total = total;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public TShirt gettShirt() {
-        return tShirt;
-    }
-
-    public void settShirt(TShirt tShirt) {
-        this.tShirt = tShirt;
-    }
-
-    public Console getConsole() {
-        return console;
-    }
-
-    public void setConsole(Console console) {
-        this.console = console;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InvoiceViewModel that = (InvoiceViewModel) o;
-        return invoiceId == that.invoiceId && Double.compare(that.unitPrice, unitPrice) == 0 && quantity == that.quantity && Double.compare(that.subtotal, subtotal) == 0 && Double.compare(that.tax, tax) == 0 && Double.compare(that.processingFee, processingFee) == 0 && Double.compare(that.total, total) == 0 && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(zipCode, that.zipCode) && Objects.equals(itemType, that.itemType) && Objects.equals(itemId, that.itemId) && Objects.equals(game, that.game) && Objects.equals(tShirt, that.tShirt) && Objects.equals(console, that.console);
+        return id == that.id && Double.compare(that.unitPrice, unitPrice) == 0 && quantity == that.quantity && Double.compare(that.subtotal, subtotal) == 0 && Double.compare(that.tax, tax) == 0 && Double.compare(that.processingFee, processingFee) == 0 && Double.compare(that.total, total) == 0 && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(zipCode, that.zipCode) && Objects.equals(itemType, that.itemType) && Objects.equals(itemId, that.itemId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoiceId, name, street, city, state, zipCode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total, game, tShirt, console);
+        return Objects.hash(id, name, street, city, state, zipCode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
     }
 
     @Override
     public String toString() {
-        return "InvoiceViewModal{" +
-                "invoiceId=" + invoiceId +
+        return "InvoiceViewModel{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
@@ -245,9 +215,6 @@ public class InvoiceViewModel {
                 ", tax=" + tax +
                 ", processingFee=" + processingFee +
                 ", total=" + total +
-                ", game=" + game +
-                ", tShirt=" + tShirt +
-                ", console=" + console +
                 '}';
     }
 }
