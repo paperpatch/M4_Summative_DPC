@@ -32,9 +32,7 @@ public class ConsoleController {
     @GetMapping("/console/manufacturer/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer) {
-        if (service.getConsoleByManufacturer(manufacturer) == null) {
-            throw new NotFoundException("Manufacturer not found.");
-        } else if(service.getConsoleByManufacturer(manufacturer).isEmpty()){
+      if(service.getConsoleByManufacturer(manufacturer).isEmpty()){
             throw new IllegalArgumentException("Enter a valid manufacturer.");
         }
         return service.getConsoleByManufacturer(manufacturer);

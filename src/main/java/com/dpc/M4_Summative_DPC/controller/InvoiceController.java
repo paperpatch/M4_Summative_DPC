@@ -34,12 +34,11 @@ public class InvoiceController {
         }
         return service.getInvoiceById(id);
     }
-
     // Create Invoice
     @RequestMapping(value = "/invoice", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody Invoice invoice) {
-        return service.addInvoice(invoice);
+    public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoiceViewModel) {
+        return service.saveInvoiceModel(invoiceViewModel);
     }
 
 //    // Update Invoice
