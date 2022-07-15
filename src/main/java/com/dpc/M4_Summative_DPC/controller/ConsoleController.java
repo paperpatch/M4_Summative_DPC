@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class ConsoleController {
     // Create a console
     @PostMapping("/console")
     @ResponseStatus(HttpStatus.CREATED)
-    public Console createConsole(@RequestBody Console console) {
+    public Console createConsole(@RequestBody @Valid Console console) {
         return service.addConsole(console);
     }
     //    Get all console
@@ -49,7 +50,7 @@ public class ConsoleController {
     //    Update a console
     @PutMapping("/console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAConsole(@RequestBody Console console) {
+    public void updateAConsole(@RequestBody @Valid Console console) {
 //        if (console.getConsoleId() == null) {
 //            console.setConsoleId(id);
 //        } else if (console.getConsoleId() != id) {

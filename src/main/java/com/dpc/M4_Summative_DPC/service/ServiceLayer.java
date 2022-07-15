@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class ServiceLayer {
     public void deleteGame(int id) { gameRepository.deleteById(id); }
 
 //    Console
-    public Console addConsole(Console console){
+    public Console addConsole(@Valid Console console){
         console = consoleRepository.save(console);
        return console;
     }
@@ -85,7 +86,7 @@ public class ServiceLayer {
         return consoleRepository.findById(id);
     }
 
-    public void updateConsole(Console console){
+    public void updateConsole(@Valid Console console){
         consoleRepository.save(console);
     }
 
