@@ -1,6 +1,7 @@
 package com.dpc.M4_Summative_DPC.repository;
 
 import com.dpc.M4_Summative_DPC.models.Game;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +68,7 @@ public class GameRepositoryTest {
 
     @Test
     public void shouldGetGameByTitle(){
-        assertEquals(gameRepository.findByTitle("Neighbours from Hell").get().getTitle(), testGame.getTitle());
+        assertEquals(gameRepository.findByTitle("Neighbours from Hell").get(0).getTitle(), testGame.getTitle());
     }
 
     @Test
@@ -78,6 +79,11 @@ public class GameRepositoryTest {
     @Test
     public void shouldGetAllGamesByStudio(){
         assertEquals(gameRepository.findByStudio("JoWooD Productions").size(), 1);
+    }
+
+    @After
+    public void clearTests() {
+        gameRepository.deleteAll();
     }
 
 }

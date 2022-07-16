@@ -167,4 +167,22 @@ public class ServiceLayerTest {
         assertEquals(2, consoleList.size());
     }
 
+//    @Test
+//    public void serviceShouldGetUnitPriceByItemTypeAndItemId() {
+//        Invoice invoice = new Invoice();
+//        invoice.setId(1);
+//        invoice.setStreet("123 fake street");
+//        invoice.setCity("Fake City");
+//        invoice.setState("CT");
+//        invoice.setZipCode("00000");
+//        invoice.setItemType("games");
+//        invoice.setItemId(1);
+//        invoice.setQuantity(2);
+//
+//        double output = 59.95;
+//        double input = service.getUnitPrice(invoice);
+//
+//        assertEquals(output, input, 0.01);
+//    }
+
 }
