@@ -2,6 +2,7 @@ package com.dpc.M4_Summative_DPC.controller;
 
 import com.dpc.M4_Summative_DPC.exceptions.NotFoundException;
 import com.dpc.M4_Summative_DPC.models.CustomErrorResponse;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -56,6 +57,15 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<CustomErrorResponse> notFoundException(NotFoundException e) {
+        CustomErrorResponse error = new CustomErrorResponse(HttpStatus.NOT_FOUND.toString(), e.getMessage());
+        error.setStatus((HttpStatus.NOT_FOUND.value()));
+        error.setTimestamp(LocalDateTime.now());
+        ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return responseEntity;
+    }
+    @ExceptionHandler(value = EmptyResultDataAccessException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<CustomErrorResponse> notFoundException(EmptyResultDataAccessException e) {
         CustomErrorResponse error = new CustomErrorResponse(HttpStatus.NOT_FOUND.toString(), e.getMessage());
         error.setStatus((HttpStatus.NOT_FOUND.value()));
         error.setTimestamp(LocalDateTime.now());

@@ -46,27 +46,26 @@ public class GameController {
     @GetMapping("/games/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Game getGameById(@PathVariable int id) {
-        Optional<Game> returnVal = service.getGameById(id);
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        } else {
-            return null;
+        Optional<Game> game = service.getGameById(id);
+            if (!game.isPresent()) {
+            throw new NotFoundException("Invalid id, enter the correct id.");
         }
+            return game.get();
+
     }
 
     @GetMapping("/games/title/{title}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Game> getGameByTitle(@PathVariable String title) {
-        if (service.getGameByTitle(title) == null) {
+    public List<Game> getGameByTitle(@PathVariable String title) {
+        if (service.getGameByTitle(title).isEmpty()) {
             throw new NotFoundException("Game title not found in inventory.");
         }
         return service.getGameByTitle(title);
     }
-
-    @GetMapping("/games/rating/{rating}")
+    @GetMapping("/games/rating/esrbRating")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByEsrbRating(@PathVariable String esrbRating) {
-        if (service.getGameByTitle(esrbRating) == null) {
+        if (service.getGameByTitle(esrbRating).isEmpty()) {
             throw new NotFoundException("Rating does not exist.");
         }
         return service.getGamesByEsrbRating(esrbRating);
@@ -75,7 +74,7 @@ public class GameController {
     @GetMapping("/games/studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByStudio(@PathVariable String studio) {
-        if (service.getGamesByStudio(studio) == null) {
+        if (service.getGamesByStudio(studio).isEmpty()) {
             throw new NotFoundException("Rating does not exist.");
         }
         return service.getGamesByStudio(studio);
