@@ -123,6 +123,7 @@ public class ServiceLayer {
 
     public Invoice addInvoice(Invoice invoice) {
         Invoice invoice1 = invoice;
+        System.out.println(invoice1);
         double unitPrice = getUnitPrice(invoice);
         double subtotal = calculateSubtotal(invoice, unitPrice);
         double salesTax = calculateTaxRate(invoice, unitPrice);

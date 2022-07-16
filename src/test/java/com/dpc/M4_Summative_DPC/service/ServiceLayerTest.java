@@ -24,7 +24,7 @@ public class ServiceLayerTest {
     ProcessingFeeRepository processingFeeRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         setUpTShirtRepositoryMock();
         setUpGameRepositoryMock();
         setUpConsoleRepositoryMock();
@@ -131,6 +131,12 @@ public class ServiceLayerTest {
         invoice.setItemId(1);
         invoice.setQuantity(2);
 
+        List<Invoice> iList = new ArrayList<>();
+        iList.add(invoice);
+
+        doReturn(invoice).when(invoiceRepository).save(invoice);
+        doReturn(Optional.of(invoice)).when(invoiceRepository).findById(1);
+        doReturn(iList).when(invoiceRepository).findAll();
     }
 
     private void setUpSalesTaxRateRepositoryMock() {
@@ -167,8 +173,50 @@ public class ServiceLayerTest {
         assertEquals(2, consoleList.size());
     }
 
+    @Test
+    public void serviceShouldGetUnitPriceByItemTypeAndItemId() {
+        Invoice invoice = new Invoice();
+        invoice.setId(1);
+        invoice.setStreet("123 fake street");
+        invoice.setCity("Fake City");
+        invoice.setState("CT");
+        invoice.setZipCode("00000");
+        invoice.setItemType("games");
+        invoice.setItemId(1);
+        invoice.setQuantity(2);
+
+        double output = 59.95;
+        double input = service.getUnitPrice(invoice);
+
+        assertEquals(output, input, 0.01);
+    }
+
+    @Test
+    public void serviceShouldCalculateSubtotal() {
+        Invoice invoice = new Invoice();
+        invoice.setId(1);
+        invoice.setStreet("123 fake street");
+        invoice.setCity("Fake City");
+        invoice.setState("CT");
+        invoice.setZipCode("00000");
+        invoice.setItemType("games");
+        invoice.setItemId(1);
+        invoice.setQuantity(2);
+
+        SalesTaxRate tax = new SalesTaxRate();
+        tax.setId(1);
+        tax.setState("CT");
+        tax.setRate(0.03);
+
+        double unitPrice = 59.95;
+        double output = 119.9;
+        double input = service.calculateSubtotal(invoice, unitPrice);
+
+        assertEquals(output, input, 0.01);
+    }
+
 //    @Test
-//    public void serviceShouldGetUnitPriceByItemTypeAndItemId() {
+//    public void serviceShouldCalculateTaxRate() {
 //        Invoice invoice = new Invoice();
 //        invoice.setId(1);
 //        invoice.setStreet("123 fake street");
@@ -179,9 +227,16 @@ public class ServiceLayerTest {
 //        invoice.setItemId(1);
 //        invoice.setQuantity(2);
 //
-//        double output = 59.95;
-//        double input = service.getUnitPrice(invoice);
+////        double ctTaxRate = 0.03;
+////        double rate = salesTaxRateRepository.findByState(invoice.getState()).getRate();
 //
+////        System.out.println(rate);
+//
+//        double unitPrice = 59.95;
+//        double output = 0.03;
+//        double input = service.calculateTaxRate(invoice, unitPrice);
+//
+////        assertEquals(ctTaxRate, rate, 0.01);
 //        assertEquals(output, input, 0.01);
 //    }
 
