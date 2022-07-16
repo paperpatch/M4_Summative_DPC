@@ -13,11 +13,16 @@ public class Console {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id")
     private  Integer consoleId;
+    @NotEmpty(message = "You must enter a value for model.")
     private String model;
+    @NotEmpty(message = "You must enter a value for model.")
     private String manufacturer;
+//    @NotEmpty(message = "You must enter a value for model.")
     @Column(name = "memory_amount")
     private String memoryAmount;
+//    @NotEmpty(message = "You must enter a value for model.")
     private String processor;
+//    @NotEmpty(message = "You must enter a value for model.")
     private Double price;
 //    @NotEmpty
     private int quantity;

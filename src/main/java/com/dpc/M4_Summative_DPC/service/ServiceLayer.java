@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class ServiceLayer {
 
     public Optional<Game> getGameById(int id) { return gameRepository.findById(id); }
 
-    public Optional<Game> getGameByTitle(String title) { return gameRepository.findByTitle(title); }
+    public List<Game> getGameByTitle(String title) { return gameRepository.findByTitle(title); }
 
     public List<Game> getGamesByEsrbRating(String esrbRating) { return gameRepository.findByEsrbRating(esrbRating); }
 
@@ -74,6 +75,7 @@ public class ServiceLayer {
 
     // Console CRUD
     public List<Console> getConsoleByManufacturer(String manufacturer) {
+
         return consoleRepository.findByManufacturer(manufacturer);
     }
 
@@ -82,7 +84,7 @@ public class ServiceLayer {
     }
 
     public Optional<Console> getConsoleById(int id) {
-        return consoleRepository.findById(id);
+          return consoleRepository.findById(id);
     }
 
     public void updateConsole(Console console){

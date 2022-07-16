@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,10 @@ public class ConsoleController {
     @GetMapping("/console/manufacturer/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer) {
-        if (service.getConsoleByManufacturer(manufacturer) == null) {
-            throw new NotFoundException("Manufacturer not found.");
+      if(service.getConsoleByManufacturer(manufacturer).isEmpty()){
+            throw new IllegalArgumentException("Enter a valid manufacturer.");
         }
-       return service.getConsoleByManufacturer(manufacturer);
+        return service.getConsoleByManufacturer(manufacturer);
     }
     //    Get console by id
     @GetMapping("/console/{id}")
@@ -42,7 +43,7 @@ public class ConsoleController {
     public Console getConsoleById(@PathVariable int id) {
         Optional<Console> console = service.getConsoleById(id);
         if (!console.isPresent()) {
-            throw new IllegalArgumentException("Invalid id, enter the correct id.");
+            throw new NotFoundException("Invalid id, enter the correct id.");
         }
          return console.get();
     }
