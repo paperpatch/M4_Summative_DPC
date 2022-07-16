@@ -141,10 +141,17 @@ public class ServiceLayerTest {
 
     private void setUpSalesTaxRateRepositoryMock() {
         salesTaxRateRepository = mock(SalesTaxRateRepository.class);
-        SalesTaxRate tax = new SalesTaxRate();
-        tax.setId(1);
-        tax.setState("CT");
-        tax.setRate(0.03);
+        SalesTaxRate salesTaxRate = new SalesTaxRate();
+        salesTaxRate.setId(1);
+        salesTaxRate.setRate(0.03);
+        salesTaxRate.setState("CT");
+
+        List<SalesTaxRate> sList = new ArrayList<>();
+        sList.add(salesTaxRate);
+
+        doReturn(salesTaxRate).when(salesTaxRateRepository).save(salesTaxRate);
+        doReturn(Optional.of(salesTaxRate)).when(salesTaxRateRepository).findById(1);
+        doReturn(sList).when(salesTaxRateRepository).findAll();
     }
 
     private void setUpProcessingFeeRepositoryMock() {
@@ -215,29 +222,16 @@ public class ServiceLayerTest {
         assertEquals(output, input, 0.01);
     }
 
-//    @Test
-//    public void serviceShouldCalculateTaxRate() {
-//        Invoice invoice = new Invoice();
-//        invoice.setId(1);
-//        invoice.setStreet("123 fake street");
-//        invoice.setCity("Fake City");
-//        invoice.setState("CT");
-//        invoice.setZipCode("00000");
-//        invoice.setItemType("games");
-//        invoice.setItemId(1);
-//        invoice.setQuantity(2);
-//
-////        double ctTaxRate = 0.03;
-////        double rate = salesTaxRateRepository.findByState(invoice.getState()).getRate();
-//
-////        System.out.println(rate);
-//
-//        double unitPrice = 59.95;
-//        double output = 0.03;
-//        double input = service.calculateTaxRate(invoice, unitPrice);
-//
-////        assertEquals(ctTaxRate, rate, 0.01);
-//        assertEquals(output, input, 0.01);
-//    }
+    @Test
+    public void serviceShouldCalculateTotal() {
+        double salesTax = 4.33;
+        double processingFee = 1.25;
+        double subtotal = 60.99;
+
+        double expected = 66.57;
+        double input = service.calculateTotal(salesTax, processingFee, subtotal);
+
+        assertEquals(expected, input, 0.01);
+    }
 
 }
