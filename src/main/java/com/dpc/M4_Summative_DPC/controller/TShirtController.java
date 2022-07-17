@@ -33,7 +33,7 @@ public class TShirtController {
     @GetMapping("/tshirt/color/{color}")
     @ResponseStatus(HttpStatus.OK)
     public List<TShirt> getAllTShirtByColor(@PathVariable("color") String color) {
-        if(serviceLayer.findAllTshirtByColor(color) == null){
+        if(serviceLayer.findAllTshirtByColor(color).isEmpty()){
             throw new NotFoundException("no t-shirt left with this color");
         }
         return serviceLayer.findAllTshirtByColor(color);
@@ -42,7 +42,7 @@ public class TShirtController {
     @GetMapping("/tshirt/size/{size}")
     @ResponseStatus(HttpStatus.OK)
     public List<TShirt> getAllTShirtBySize(@PathVariable("size")String size) {
-        if(serviceLayer.findAllTshirtByColor(size) == null){
+        if(serviceLayer.findAllTshirtBySize(size).isEmpty()){
             throw new NotFoundException("no t-shirt left with this size");
         }
         return serviceLayer.findAllTshirtBySize(size);
@@ -50,11 +50,12 @@ public class TShirtController {
 
     @GetMapping("/tshirt/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<TShirt> findTShirtById(@PathVariable int id) throws Exception{
-        if(serviceLayer.findATShirtById(id) == null) {
-            throw new NotFoundException("no t-shirt found!");
+    public TShirt findTShirtById(@PathVariable int id) throws Exception{
+        Optional<TShirt> tshirt = serviceLayer.findATShirtById(id);
+        if(!tshirt.isPresent()) {
+            throw new NotFoundException("Could not found, enter the correct id.!");
         }
-       return serviceLayer.findATShirtById(id);
+       return tshirt.get();
     }
 
     @PutMapping("/tshirt/{id}")
