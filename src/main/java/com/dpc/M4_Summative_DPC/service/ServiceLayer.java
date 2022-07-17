@@ -73,8 +73,7 @@ public class ServiceLayer {
     }
 
     public Console addConsole(Console console){
-        console = consoleRepository.save(console);
-       return console;
+       return consoleRepository.save(console);
     }
 
     public void updateConsole(Console console){
@@ -90,9 +89,11 @@ public class ServiceLayer {
     public TShirt saveTShirt(TShirt tShirt){
         return tShirtRepository.save(tShirt);
     }
+
     public Optional<TShirt> findATShirtById(int id){
         return tShirtRepository.findById(id);
     }
+
     public List<TShirt> findAllTshirt(){
         return tShirtRepository.findAll();
     }
