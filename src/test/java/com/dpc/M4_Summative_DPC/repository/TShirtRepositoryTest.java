@@ -33,7 +33,7 @@ public class TShirtRepositoryTest {
     }
 
     @Test
-    public void addGetDeleteTShirt(){
+    public void shouldAddAndDeleteTShirt(){
         Optional<TShirt> tShirtList = tShirtRepository.findById(testTShirt.getId());
         assertEquals(tShirtList.get(), testTShirt);
         tShirtRepository.deleteById(testTShirt.getId());
@@ -42,17 +42,16 @@ public class TShirtRepositoryTest {
     }
 
     @Test
-    public void updateTShirt(){
+    public void shouldUpdateTShirt(){
         testTShirt.setSize("medium");
 
         tShirtRepository.save(testTShirt);
         Optional<TShirt> tShirtList = tShirtRepository.findById(testTShirt.getId());
         assertEquals(tShirtList.get(),testTShirt);
-
     }
 
     @Test
-    public void getAllTShirts(){
+    public void shouldGetAllTShirts(){
         testTShirt = new TShirt();
         testTShirt.setQuantity(86);
         testTShirt.setPrice(18.99);
@@ -67,12 +66,12 @@ public class TShirtRepositoryTest {
     }
 
     @Test
-    public void getAllTShirtByColor(){
+    public void shouldGetAllTShirtByColor(){
         assertEquals(tShirtRepository.findByColor("blue").size(), 1);
     }
 
     @Test
-    public void getAllTShirtBySize(){
+    public void shouldGetAllTShirtBySize(){
         assertEquals(tShirtRepository.findBySize("small").size(),1);
     }
 
