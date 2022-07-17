@@ -61,12 +61,6 @@ public class ServiceLayer {
 
     public void deleteGame(int id) { gameRepository.deleteById(id); }
 
-//    Console
-    public Console addConsole(Console console){
-        console = consoleRepository.save(console);
-       return console;
-    }
-
     public void seedGames() {
         gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 50));
         gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 100));
@@ -74,6 +68,11 @@ public class ServiceLayer {
     }
 
     // Console CRUD
+    public Console addConsole(Console console){
+        console = consoleRepository.save(console);
+        return console;
+    }
+
     public List<Console> getConsoleByManufacturer(String manufacturer) {
 
         return consoleRepository.findByManufacturer(manufacturer);
