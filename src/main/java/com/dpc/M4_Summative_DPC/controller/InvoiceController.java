@@ -37,8 +37,8 @@ public class InvoiceController {
     // Create Invoice
     @RequestMapping(value = "/invoices", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoiceViewModel) {
-        return service.saveInvoiceModel(invoiceViewModel);
+    public Invoice createInvoice(@RequestBody Invoice invoice) {
+        return service.addInvoice(invoice);
     }
 
     // Update Invoice

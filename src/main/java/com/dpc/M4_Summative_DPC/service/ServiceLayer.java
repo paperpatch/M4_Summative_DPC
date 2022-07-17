@@ -3,12 +3,10 @@ package com.dpc.M4_Summative_DPC.service;
 import com.dpc.M4_Summative_DPC.models.*;
 import com.dpc.M4_Summative_DPC.repository.*;
 import com.dpc.M4_Summative_DPC.viewmodel.InvoiceViewModel;
-import com.dpc.M4_Summative_DPC.viewmodel.TShirtViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +29,6 @@ public class ServiceLayer {
         this.invoiceRepository = invoiceRepository;
         this.salesTaxRateRepository = salesTaxRateRepository;
         this.processingFeeRepository = processingFeeRepository;
-
     }
 
     // Clear Database
@@ -61,24 +58,8 @@ public class ServiceLayer {
 
     public void deleteGame(int id) { gameRepository.deleteById(id); }
 
-//    Console
-    public Console addConsole(Console console){
-        console = consoleRepository.save(console);
-       return console;
-    }
-
-    public void seedGames() {
-        gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 50));
-        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 100));
-        gameRepository.save(new Game("Among Us", "E (Everyone)", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 73));
-    }
 
     // Console CRUD
-    public List<Console> getConsoleByManufacturer(String manufacturer) {
-
-        return consoleRepository.findByManufacturer(manufacturer);
-    }
-
     public List<Console> getAllConsole (){
         return consoleRepository.findAll();
     }
@@ -87,18 +68,21 @@ public class ServiceLayer {
           return consoleRepository.findById(id);
     }
 
+    public List<Console> getConsoleByManufacturer(String manufacturer) {
+        return consoleRepository.findByManufacturer(manufacturer);
+    }
+
+    public Console addConsole(Console console){
+        console = consoleRepository.save(console);
+       return console;
+    }
+
     public void updateConsole(Console console){
         consoleRepository.save(console);
     }
 
     public void deleteConsole(int id){
         consoleRepository.deleteById(id);
-    }
-
-    public void seedConsole() {
-        consoleRepository.save(new Console("Playstation 5", "Sony", "1 TB", "AMD Zen 2-CPU", 549.99, 20));
-        consoleRepository.save(new Console("Xbox Series X", "Microsoft", "1 TB", "AMD Zen 2-CPU", 499.99, 10));
-        consoleRepository.save(new Console("Nintendo Switch", "Nintendo", "32 GB", "Quad-core ARM Cortex", 299.99, 15));
     }
 
     //T-Shirt CRUD
@@ -131,20 +115,15 @@ public class ServiceLayer {
         tShirtRepository.deleteById(id);
     }
 
-    public void seedTShirts() {
-        tShirtRepository.save(new TShirt("small", "red", "small red shirt", 9.99, 14));
-        tShirtRepository.save(new TShirt("medium", "blue", "medium sized blue shirt", 9.99, 30));
-        tShirtRepository.save(new TShirt("large", "green", "large sized green shirt", 9.99, 21));
-    }
 
     // Invoice CRUD
-
     public List<Invoice> getAllInvoices() { return invoiceRepository.findAll(); }
 
     public Optional<Invoice> getInvoiceById(int id) { return invoiceRepository.findById(id); }
 
     public Invoice addInvoice(Invoice invoice) {
         Invoice invoice1 = invoice;
+        System.out.println(invoice1);
         double unitPrice = getUnitPrice(invoice);
         double subtotal = calculateSubtotal(invoice, unitPrice);
         double salesTax = calculateTaxRate(invoice, unitPrice);
@@ -211,8 +190,8 @@ public class ServiceLayer {
             throw new IndexOutOfBoundsException("Quantity purchased must be greater than zero.");
         }
 
-        int availableQuantity = 0;
-        int updateQuantity = 0;
+        int availableQuantity;
+        int updateQuantity;
 
         switch (invoice.getItemType().toLowerCase()) {
             case "games":
@@ -251,7 +230,7 @@ public class ServiceLayer {
                 updateTShirt(tshirt);
                 break;
         }
-    };
+    }
 
     public void updateInvoice(Invoice invoice) { invoiceRepository.save(invoice); }
 
@@ -280,16 +259,6 @@ public class ServiceLayer {
     }
 
     public InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
-        // Get the associated games
-        Optional<Game> game = gameRepository.findById(invoice.getItemId());
-
-        // Get the associated consoles
-        Optional<Console> console = consoleRepository.findById(invoice.getItemId());
-
-        // Get the associated t-shirts
-        Optional<TShirt> tShirt = tShirtRepository.findById(invoice.getItemId());
-
-        // Assemble the AlbumViewModel
         InvoiceViewModel ivm = new InvoiceViewModel();
         ivm.setId(invoice.getId());
         ivm.setName(invoice.getName());
@@ -306,7 +275,6 @@ public class ServiceLayer {
         ivm.setTotal(invoice.getTotal());
         ivm.setItemId(invoice.getItemId());
 
-        // Return the AlbumViewModel
         return ivm;
     }
 
@@ -326,6 +294,36 @@ public class ServiceLayer {
     // Sales Tax CRUD
     public SalesTaxRate findSalesTaxRateByState(String state) {
         return salesTaxRateRepository.findByState(state);
+    }
+
+    // Processing Fee CRUD
+    public ProcessingFee findProcessingFee(Invoice invoice) {
+        return processingFeeRepository.findByProductType(invoice.getItemType());
+    }
+
+    // Seed Database
+    public void seedGames() {
+        gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 50));
+        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 100));
+        gameRepository.save(new Game("Among Us", "E (Everyone)", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 73));
+    }
+
+    public void seedTShirts() {
+        tShirtRepository.save(new TShirt("small", "red", "small red shirt", 9.99, 14));
+        tShirtRepository.save(new TShirt("medium", "blue", "medium sized blue shirt", 9.99, 30));
+        tShirtRepository.save(new TShirt("large", "green", "large sized green shirt", 9.99, 21));
+    }
+
+    public void seedConsole() {
+        consoleRepository.save(new Console("Playstation 5", "Sony", "1 TB", "AMD Zen 2-CPU", 549.99, 20));
+        consoleRepository.save(new Console("Xbox Series X", "Microsoft", "1 TB", "AMD Zen 2-CPU", 499.99, 10));
+        consoleRepository.save(new Console("Nintendo Switch", "Nintendo", "32 GB", "Quad-core ARM Cortex", 299.99, 15));
+    }
+
+    public void seedFees() {
+        processingFeeRepository.save(new ProcessingFee("Games", 1.49));
+        processingFeeRepository.save(new ProcessingFee("Consoles", 14.99));
+        processingFeeRepository.save(new ProcessingFee("TShirts", 1.99));
     }
 
     public void seedTaxes() {
@@ -379,17 +377,6 @@ public class ServiceLayer {
         salesTaxRateRepository.save(new SalesTaxRate("WV", 0.05));
         salesTaxRateRepository.save(new SalesTaxRate("WI", 0.03));
         salesTaxRateRepository.save(new SalesTaxRate("WY", 0.04));
-    }
-
-//     Processing Fee CRUD
-    public ProcessingFee findProcessingFee(Invoice invoice) {
-        return processingFeeRepository.findByProductType(invoice.getItemType());
-    }
-
-    public void seedFees() {
-        processingFeeRepository.save(new ProcessingFee("Games", 1.49));
-        processingFeeRepository.save(new ProcessingFee("Consoles", 14.99));
-        processingFeeRepository.save(new ProcessingFee("TShirts", 1.99));
     }
 
 }

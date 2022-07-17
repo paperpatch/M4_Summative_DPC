@@ -12,8 +12,7 @@ public class Console {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id")
-    private  Integer consoleId;
-    @NotEmpty(message = "You must enter a value for model.")
+    private Integer consoleId;
     private String model;
     @NotEmpty(message = "You must enter a value for model.")
     private String manufacturer;

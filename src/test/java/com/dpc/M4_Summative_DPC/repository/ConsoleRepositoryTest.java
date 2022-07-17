@@ -34,7 +34,7 @@ public class ConsoleRepositoryTest {
     }
 
     @Test
-    public void addGetDeleteConsole(){
+    public void shouldAddAndDeleteConsole(){
         Optional<Console> consoleList = consoleRepository.findById(testConsole.getConsoleId());
         assertEquals(consoleList.get(), testConsole);
         consoleRepository.deleteById(testConsole.getConsoleId());
@@ -43,18 +43,16 @@ public class ConsoleRepositoryTest {
     }
 
     @Test
-    public void updateConsole(){
+    public void shouldUpdateConsole(){
         testConsole.setPrice(700.00);
-
         consoleRepository.save(testConsole);
         Optional<Console> consoleList = consoleRepository.findById(testConsole.getConsoleId());
         assertEquals(consoleList.get(),testConsole);
-
     }
 
     @Test
-    public void getAllTConsoles(){
-       testConsole = new Console();
+    public void ShouldGetAllConsoles(){
+        testConsole = new Console();
         testConsole.setModel("PlayStation5");
         testConsole.setManufacturer("Blizzard");
         testConsole.setMemoryAmount("1TB");
@@ -62,14 +60,14 @@ public class ConsoleRepositoryTest {
         testConsole.setPrice(575.99);
         testConsole.setQuantity(200);
 
-       testConsole = consoleRepository.save(testConsole);
+        testConsole = consoleRepository.save(testConsole);
 
         List<Console> consoleList = consoleRepository.findAll();
         assertEquals(consoleList.size(),2);
     }
 
     @Test
-    public void getAllConsoleByManufacture(){
+    public void shouldGetAllConsolesByManufacture(){
         assertEquals(consoleRepository.findByManufacturer("Sony").size(), 1);
     }
 
