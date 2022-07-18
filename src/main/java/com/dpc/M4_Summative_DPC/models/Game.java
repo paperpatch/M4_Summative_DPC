@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -16,7 +14,6 @@ public class Game {
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @NotEmpty(message = "Title should not be empty")
     private String title;
     @NotEmpty(message = "ESRB Rating should not be empty")

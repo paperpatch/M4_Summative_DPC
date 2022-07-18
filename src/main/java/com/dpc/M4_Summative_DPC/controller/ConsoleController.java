@@ -65,6 +65,4 @@ public class ConsoleController {
         service.deleteConsole(id);
     }
 
-
-
 }

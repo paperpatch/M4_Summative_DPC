@@ -84,6 +84,7 @@ public class ServiceLayer {
         consoleRepository.deleteById(id);
     }
 
+
     //T-Shirt CRUD
     @Transactional
     public TShirt saveTShirt(TShirt tShirt){
@@ -238,27 +239,6 @@ public class ServiceLayer {
     public void deleteInvoice(int id) { invoiceRepository.deleteById(id); }
 
     // Invoice View Modal CRUD
-    @Transactional
-    public InvoiceViewModel saveInvoiceModel(InvoiceViewModel invoiceViewModel){
-        Invoice i = new Invoice();
-        i.setName(invoiceViewModel.getName());
-        i.setStreet(invoiceViewModel.getStreet());
-        i.setCity(invoiceViewModel.getCity());
-        i.setState(invoiceViewModel.getState());
-        i.setZipCode(invoiceViewModel.getZipCode());
-        i.setItemType(invoiceViewModel.getItemType());
-        i.setUnitPrice(invoiceViewModel.getUnitPrice());
-        i.setQuantity(invoiceViewModel.getQuantity());
-        i.setSubtotal(invoiceViewModel.getSubtotal());
-        i.setTax(invoiceViewModel.getTax());
-        i.setProcessingFee(invoiceViewModel.getProcessingFee());
-        i.setTotal(invoiceViewModel.getTotal());
-        i = invoiceRepository.save(i);
-        invoiceViewModel.setId(i.getId());
-
-        return invoiceViewModel;
-    }
-
     public InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         InvoiceViewModel ivm = new InvoiceViewModel();
         ivm.setId(invoice.getId());
@@ -376,5 +356,4 @@ public class ServiceLayer {
         salesTaxRateRepository.save(new SalesTaxRate("WI", 0.03));
         salesTaxRateRepository.save(new SalesTaxRate("WY", 0.04));
     }
-
 }

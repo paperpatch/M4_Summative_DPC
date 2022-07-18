@@ -1,6 +1,5 @@
 package com.dpc.M4_Summative_DPC.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -25,8 +24,6 @@ public class TShirt {
     @NotNull(message = "You must enter a value for price.")
     private double price;
     private int quantity;
-
-
 
     public TShirt(){}
 

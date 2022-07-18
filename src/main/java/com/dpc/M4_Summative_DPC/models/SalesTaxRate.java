@@ -12,12 +12,9 @@ public class SalesTaxRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column(name = "tax_id")
     private String state;
-
     private double rate;
-
     public SalesTaxRate() {
     }
 
