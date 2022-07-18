@@ -42,7 +42,7 @@ public class TShirtController {
     @GetMapping("/tshirt/size/{size}")
     @ResponseStatus(HttpStatus.OK)
     public List<TShirt> getAllTShirtBySize(@PathVariable("size")String size) {
-        if(serviceLayer.findAllTshirtByColor(size).isEmpty()){
+        if(serviceLayer.findAllTshirtBySize(size).isEmpty()){
             throw new NotFoundException("no t-shirt left with this size");
         }
         return serviceLayer.findAllTshirtBySize(size);
