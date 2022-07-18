@@ -292,27 +292,24 @@ public class ServiceLayer {
         return iList;
     }
 
-    // Sales Tax CRUD
-    public SalesTaxRate findSalesTaxRateByState(String state) {
-        return salesTaxRateRepository.findByState(state);
-    }
-
-    // Processing Fee CRUD
-    public ProcessingFee findProcessingFee(Invoice invoice) {
-        return processingFeeRepository.findByProductType(invoice.getItemType());
-    }
-
     // Seed Database
     public void seedGames() {
-        gameRepository.save(new Game("Elden Ring", "M (Mature 17+)", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 50));
-        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E (Everyone)", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 100));
-        gameRepository.save(new Game("Among Us", "E (Everyone)", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 73));
+        gameRepository.save(new Game("Elden Ring", "M", "Elden Ring sees you play as an initially meaningless character in a world of monsters and demigods, all struggling for control over the Lands Between.", 59.95, "FromSoftware Inc.", 50));
+        gameRepository.save(new Game("LEGO Star Wars: The Skywalker Saga", "E", "Lego-themed action-adventure game.", 49.00, "Warner Bros. Interactive Entertainment", 100));
+        gameRepository.save(new Game("Among Us", "E", "Online multiplayer social deduction game.", 4.99, "InnerSloth LLC", 73));
+        gameRepository.save(new Game("Pokémon Legends: Arceus", "E", "Eighth generation of the Pokémon video game series and serves as a perquel to Pokémon Diamond and Pearl", 59.99, "Game Freak", 530));
+        gameRepository.save(new Game("Harvestella", "T", "In a vibrant and colorful world, players will tend their crops, befriend the townsfolk, overcome threats, discover the origins of the world and the truth", 59.99, "Square Enix", 64));
     }
 
     public void seedTShirts() {
-        tShirtRepository.save(new TShirt("small", "red", "small red shirt", 9.99, 14));
-        tShirtRepository.save(new TShirt("medium", "blue", "medium sized blue shirt", 9.99, 30));
-        tShirtRepository.save(new TShirt("large", "green", "large sized green shirt", 9.99, 21));
+        tShirtRepository.save(new TShirt("XXS", "yellow", "extra extra small yellow shirt", 5.99, 54));
+        tShirtRepository.save(new TShirt("XS", "teal", "extra small teal shirt", 6.99, 14));
+        tShirtRepository.save(new TShirt("S", "red", "small red shirt", 7.99, 14));
+        tShirtRepository.save(new TShirt("M", "blue", "medium sized blue shirt", 9.99, 40));
+        tShirtRepository.save(new TShirt("M", "white", "medium sized white shirt", 9.99, 70));
+        tShirtRepository.save(new TShirt("L", "green", "large sized green shirt", 9.99, 21));
+        tShirtRepository.save(new TShirt("XL", "navy", "extra large sized navy shirt", 11.99, 4));
+        tShirtRepository.save(new TShirt("XXL", "black", "extra extra large sized black shirt", 12.99, 5));
     }
 
     public void seedConsole() {
