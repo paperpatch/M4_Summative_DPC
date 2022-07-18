@@ -35,7 +35,7 @@ public class GameController {
 
         if (studio != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getEsrbRating().equals(studio))
+                    .filter(g -> g.getStudio().equals(studio))
                     .collect(Collectors.toList());
         }
 
@@ -61,20 +61,20 @@ public class GameController {
         }
         return service.getGameByTitle(title);
     }
-    @GetMapping("/games/rating/esrbRating")
+    @GetMapping("/games/rating/{rating}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> getGamesByEsrbRating(@PathVariable String esrbRating) {
-        if (service.getGameByTitle(esrbRating).isEmpty()) {
+    public List<Game> getGamesByEsrbRating(@PathVariable String rating) {
+        if (service.getGamesByEsrbRating(rating).isEmpty()) {
             throw new NotFoundException("Rating does not exist.");
         }
-        return service.getGamesByEsrbRating(esrbRating);
+        return service.getGamesByEsrbRating(rating);
     }
 
     @GetMapping("/games/studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByStudio(@PathVariable String studio) {
         if (service.getGamesByStudio(studio).isEmpty()) {
-            throw new NotFoundException("Rating does not exist.");
+            throw new NotFoundException("Studio does not exist.");
         }
         return service.getGamesByStudio(studio);
     }
