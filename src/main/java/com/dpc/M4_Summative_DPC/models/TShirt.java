@@ -4,6 +4,8 @@ package com.dpc.M4_Summative_DPC.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -14,9 +16,13 @@ public class TShirt {
     @Column(name = "tshirt_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "You must enter a value for size.")
     private String size;
+    @NotEmpty(message = "You must enter a value for color.")
     private String color;
+    @NotEmpty(message = "You must enter a value for description.")
     private String description;
+    @NotNull(message = "You must enter a value for price.")
     private double price;
     private int quantity;
 
