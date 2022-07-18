@@ -1,5 +1,4 @@
-# Trackend
-![Github license](http://img.shields.io/badge/license-MIT-blue.svg)
+# M4 Summative DPC
 
 Back-End Game Store Data Application. This repository handles the API backend that manages the inventory of games, console and T-shirts. It provides a mechanism by which users can purchase the products.
 

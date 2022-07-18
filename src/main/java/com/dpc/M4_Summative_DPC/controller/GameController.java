@@ -35,7 +35,7 @@ public class GameController {
 
         if (studio != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getEsrbRating().equals(studio))
+                    .filter(g -> g.getStudio().equals(studio))
                     .collect(Collectors.toList());
         }
 
