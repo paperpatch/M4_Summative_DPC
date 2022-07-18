@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ConsoleController {
@@ -27,7 +28,13 @@ public class ConsoleController {
     @GetMapping("/console")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getAllConsole(@RequestParam(required = false) String manufacturer) {
-        return service.getAllConsole();
+        List<Console> returnList = service.getAllConsole();
+        if (manufacturer != null) {
+            returnList = returnList.stream()
+                    .filter(c -> c.getManufacturer().equals(manufacturer))
+                    .collect(Collectors.toList());
+        }
+        return returnList;
     }
 
     //    Get console by manufacturer
