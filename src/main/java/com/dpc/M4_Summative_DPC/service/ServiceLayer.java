@@ -150,7 +150,7 @@ public class ServiceLayer {
             case "consoles":
                 Console console = getConsoleById(invoice.getItemId()).get();
                 return console.getPrice();
-            case "tshirt":
+            case "tshirts":
                 TShirt tshirt = findATShirtById(invoice.getItemId()).get();
                 return tshirt.getPrice();
             default:
@@ -219,7 +219,7 @@ public class ServiceLayer {
                 console.setQuantity(updateQuantity);
                 updateConsole(console);
                 break;
-            case "tshirt":
+            case "tshirts":
                 TShirt tshirt = findATShirtById(invoice.getItemId()).get();
                 availableQuantity = tshirt.getQuantity();
                 if (availableQuantity < quantity) {
