@@ -61,6 +61,7 @@ Start up Postman or Insomnia to check your API routes. Seed your database using 
 | GET    | http://localhost:8080/games/:id                          | Returns a Game with with matching ID                |
 | GET    | http://localhost:8080/games/title/:title                 | Returns list of Games with matching Title           |
 | GET    | http://localhost:8080/games/rating/:rating               | Returns list of Games with matching ESRB rating     |
+| GET    | http://localhost:8080/games/studio/:studio               | Returns list of Games with matching studio          |
 | POST   | http://localhost:8080/games                              | Creates a new Game entry                            |
 | PUT    | http://localhost:8080/games                              | Updates Game with matching ID                       |
 | DELETE | http://localhost:8080/games/:id                          | Deletes a game with matching ID                     |
@@ -88,7 +89,7 @@ Start up Postman or Insomnia to check your API routes. Seed your database using 
 |--------------|--------------------------------------------------|-------------------------|
 | Debasu Eyasu | [@bayleyegn100](https://github.com/bayleyegn100) | bayleyegn100@gmail.com  |
 | Patrick Chen | [@paperpatch](https://github.com/paperpatch)     | patchen21@gmail.com     |
-| Chau Nguyen  | [@hoale123](https://github.com/ChauDeveloper)    | chaudeveloper@gmail.com |
+| Chau Nguyen  | [@ChauDeveloper](https://github.com/ChauDeveloper)    | chaudeveloper@gmail.com |
 
 ## License
 
