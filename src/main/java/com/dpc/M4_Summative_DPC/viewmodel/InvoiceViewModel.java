@@ -6,34 +6,34 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
-@Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "invoiceModel")
+//@Entity
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@Table(name = "invoiceModel")
 public class InvoiceViewModel {
-    @Id
-    @Column(name = "invoiceModel_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @Column(name = "invoiceModel_id")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotEmpty(message = "You must enter a name")
+//    @NotEmpty(message = "You must enter a name")
     private String name;
-    @NotEmpty(message = "You must enter a street")
+//    @NotEmpty(message = "You must enter a street")
     private String street;
-    @NotEmpty(message = "You must enter a city")
+//    @NotEmpty(message = "You must enter a city")
     private String city;
-    @NotEmpty(message = "You must enter a state")
+//    @NotEmpty(message = "You must enter a state")
     private String state;
-    @NotEmpty(message = "You must enter a zipcode")
+//    @NotEmpty(message = "You must enter a zipcode")
     private String zipCode;
-    @Column(name= "item_type")
+//    @Column(name= "item_type")
      private String itemType;
-    @Column(name= "item_id")
+//    @Column(name= "item_id")
     private Integer itemId;
-    @Column(name= "unit_price")
+//    @Column(name= "unit_price")
     private double unitPrice;
     private int quantity;
     private double subtotal;
     private double tax;
-    @Column(name= "processing_fee")
+//    @Column(name= "processing_fee")
     private double processingFee;
     private double total;
 
