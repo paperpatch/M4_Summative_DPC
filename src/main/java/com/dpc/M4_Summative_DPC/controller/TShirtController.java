@@ -58,12 +58,12 @@ public class TShirtController {
        return tshirt.get();
     }
 
-    @PutMapping("/tshirt/{id}")
+    @PutMapping("/tshirt")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTShirt(@PathVariable int id, @RequestBody TShirt tShirt) {
-        if(serviceLayer.findATShirtById(id) == null) {
-            throw new NotFoundException("no t-shirt found!");
-        }
+    public void updateTShirt(@RequestBody TShirt tShirt) {
+//        if(serviceLayer.updateTShirt(tShirt) == null) {
+//            throw new NotFoundException("no t-shirt found!");
+//        }
         serviceLayer.updateTShirt(tShirt);
     }
 
