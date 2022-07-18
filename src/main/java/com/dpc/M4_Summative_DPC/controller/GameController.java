@@ -24,19 +24,19 @@ public class GameController {
         List<Game> returnList = service.getAllGames();
         if (title != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getTitle().contains(title))
+                    .filter(g -> g.getTitle().equals(title))
                     .collect(Collectors.toList());
         }
 
         if (esrbRating != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getEsrbRating().contains(esrbRating))
+                    .filter(g -> g.getEsrbRating().equals(esrbRating))
                     .collect(Collectors.toList());
         }
 
         if (studio != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getEsrbRating().contains(studio))
+                    .filter(g -> g.getEsrbRating().equals(studio))
                     .collect(Collectors.toList());
         }
 
