@@ -170,7 +170,7 @@ public class ServiceLayer {
 
     // https://mkyong.com/java/how-to-format-a-double-in-java/
     public double formatDouble(double d) {
-        return Double.parseDouble(String.format("%,.2f", d));
+        return Double.parseDouble(String.format("%.2f", d));
     }
 
     public double calculateProcessingFee(Invoice invoice) {
