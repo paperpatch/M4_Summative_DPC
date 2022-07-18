@@ -3,6 +3,7 @@ package com.dpc.M4_Summative_DPC.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -13,17 +14,17 @@ public class Console {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id")
     private Integer consoleId;
-    private String model;
     @NotEmpty(message = "You must enter a value for model.")
+    private String model;
+    @NotEmpty(message = "You must enter a value for manufacturer.")
     private String manufacturer;
-//    @NotEmpty(message = "You must enter a value for model.")
     @Column(name = "memory_amount")
+    @NotEmpty(message = "You must enter a value for memoryAmount.")
     private String memoryAmount;
-//    @NotEmpty(message = "You must enter a value for model.")
+    @NotEmpty(message = "You must enter a value for processor.")
     private String processor;
-//    @NotEmpty(message = "You must enter a value for model.")
+    @NotNull(message = "You must enter a value for price")
     private Double price;
-//    @NotEmpty
     private int quantity;
 
     public Console() {

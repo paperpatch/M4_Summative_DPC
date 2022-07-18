@@ -17,17 +17,16 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty
+    @NotEmpty(message = "Title should not be empty")
     private String title;
-    @NotEmpty
+    @NotEmpty(message = "ESRB Rating should not be empty")
     private String esrbRating;
-    @NotEmpty
+    @NotEmpty(message = "Description should not be empty")
     private String description;
-    @NotNull
+    @NotNull(message = "Price needs to be included")
     private double price;
-    @NotEmpty
+    @NotEmpty(message = "Studio should not be empty")
     private String studio;
-    @NotNull
     private int quantity;
 
     public Game() {

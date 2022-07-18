@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class TShirtController {
 
     @PostMapping("/tshirt")
     @ResponseStatus(HttpStatus.CREATED)
-    public TShirt addTShirt(@RequestBody TShirt tShirt) {
+    public TShirt addTShirt(@RequestBody @Valid TShirt tShirt) {
         return serviceLayer.saveTShirt(tShirt);
     }
 
@@ -58,12 +59,9 @@ public class TShirtController {
        return tshirt.get();
     }
 
-    @PutMapping("/tshirt/{id}")
+    @PutMapping("/tshirt")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTShirt(@PathVariable int id, @RequestBody TShirt tShirt) {
-        if(serviceLayer.findATShirtById(id) == null) {
-            throw new NotFoundException("no t-shirt found!");
-        }
+    public void updateTShirt(@RequestBody @Valid TShirt tShirt) {
         serviceLayer.updateTShirt(tShirt);
     }
 

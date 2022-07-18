@@ -82,13 +82,13 @@ public class GameController {
 
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
-    public Game addGame(@RequestBody Game game) {
+    public Game addGame(@RequestBody @Valid Game game) {
         return service.addGame(game);
     }
 
     @PutMapping("/games")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGame(@RequestBody Game game) {
+    public void updateGame(@RequestBody @Valid Game game) {
         service.updateGame(game);
     }
 

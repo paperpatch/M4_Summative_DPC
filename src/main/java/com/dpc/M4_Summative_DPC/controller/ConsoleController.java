@@ -19,15 +19,17 @@ public class ConsoleController {
     // Create a console
     @PostMapping("/console")
     @ResponseStatus(HttpStatus.CREATED)
-    public Console createConsole(@RequestBody Console console) {
+    public Console createConsole(@RequestBody @Valid Console console) {
         return service.addConsole(console);
     }
+
     //    Get all console
     @GetMapping("/console")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getAllConsole(@RequestParam(required = false) String manufacturer) {
         return service.getAllConsole();
     }
+
     //    Get console by manufacturer
     @GetMapping("/console/manufacturer/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
@@ -37,6 +39,7 @@ public class ConsoleController {
         }
         return service.getConsoleByManufacturer(manufacturer);
     }
+
     //    Get console by id
     @GetMapping("/console/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -47,18 +50,14 @@ public class ConsoleController {
         }
          return console.get();
     }
+
     //    Update a console
     @PutMapping("/console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAConsole(@RequestBody Console console) {
-//        if (console.getConsoleId() == null) {
-//            console.setConsoleId(id);
-//        } else if (console.getConsoleId() != id) {
-//
-//            throw new IllegalArgumentException("Invalid id, enter the correct id.");
-//        }
+    public void updateAConsole(@RequestBody @Valid Console console) {
         service.updateConsole(console);
     }
+
     //    Delete console
     @DeleteMapping("/console/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
