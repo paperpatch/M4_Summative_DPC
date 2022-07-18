@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ConsoleController {
@@ -19,15 +20,23 @@ public class ConsoleController {
     // Create a console
     @PostMapping("/console")
     @ResponseStatus(HttpStatus.CREATED)
-    public Console createConsole(@RequestBody Console console) {
+    public Console createConsole(@RequestBody @Valid Console console) {
         return service.addConsole(console);
     }
+
     //    Get all console
     @GetMapping("/console")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getAllConsole(@RequestParam(required = false) String manufacturer) {
-        return service.getAllConsole();
+        List<Console> returnList = service.getAllConsole();
+        if (manufacturer != null) {
+            returnList = returnList.stream()
+                    .filter(c -> c.getManufacturer().equals(manufacturer))
+                    .collect(Collectors.toList());
+        }
+        return returnList;
     }
+
     //    Get console by manufacturer
     @GetMapping("/console/manufacturer/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
@@ -37,6 +46,7 @@ public class ConsoleController {
         }
         return service.getConsoleByManufacturer(manufacturer);
     }
+
     //    Get console by id
     @GetMapping("/console/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -47,25 +57,19 @@ public class ConsoleController {
         }
          return console.get();
     }
+
     //    Update a console
     @PutMapping("/console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAConsole(@RequestBody Console console) {
-//        if (console.getConsoleId() == null) {
-//            console.setConsoleId(id);
-//        } else if (console.getConsoleId() != id) {
-//
-//            throw new IllegalArgumentException("Invalid id, enter the correct id.");
-//        }
+    public void updateAConsole(@RequestBody @Valid Console console) {
         service.updateConsole(console);
     }
+
     //    Delete console
     @DeleteMapping("/console/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroyConsole(@PathVariable int id) {
         service.deleteConsole(id);
     }
-
-
 
 }

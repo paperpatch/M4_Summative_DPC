@@ -1,15 +1,13 @@
 package com.dpc.M4_Summative_DPC.controller;
 
-
-
 import com.dpc.M4_Summative_DPC.exceptions.NotFoundException;
 import com.dpc.M4_Summative_DPC.models.TShirt;
-import com.dpc.M4_Summative_DPC.repository.TShirtRepository;
 import com.dpc.M4_Summative_DPC.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +19,7 @@ public class TShirtController {
 
     @PostMapping("/tshirt")
     @ResponseStatus(HttpStatus.CREATED)
-    public TShirt addTShirt(@RequestBody TShirt tShirt) {
+    public TShirt addTShirt(@RequestBody @Valid TShirt tShirt) {
         return serviceLayer.saveTShirt(tShirt);
     }
 
@@ -32,13 +30,13 @@ public class TShirtController {
 
         if (size != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getSize().contains(size))
+                    .filter(g -> g.getSize().equals(size))
                     .collect(Collectors.toList());
         }
 
         if (color != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getColor().contains(color))
+                    .filter(g -> g.getColor().equals(color))
                     .collect(Collectors.toList());
         }
 
@@ -47,7 +45,7 @@ public class TShirtController {
 
     @GetMapping("/tshirt/color/{color}")
     @ResponseStatus(HttpStatus.OK)
-    public List<TShirt> getAllTShirtByColor(@PathVariable("color") String color) {
+    public List<TShirt> getAllTShirtByColor(@PathVariable String color) {
         if(serviceLayer.findAllTshirtByColor(color).isEmpty()){
             throw new NotFoundException("no t-shirt left with this color");
         }
@@ -56,7 +54,7 @@ public class TShirtController {
 
     @GetMapping("/tshirt/size/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<TShirt> getAllTShirtBySize(@PathVariable("size")String size) {
+    public List<TShirt> getAllTShirtBySize(@PathVariable String size) {
         if(serviceLayer.findAllTshirtBySize(size).isEmpty()){
             throw new NotFoundException("no t-shirt left with this size");
         }
@@ -75,10 +73,7 @@ public class TShirtController {
 
     @PutMapping("/tshirt")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTShirt(@RequestBody TShirt tShirt) {
-//        if(serviceLayer.updateTShirt(tShirt) == null) {
-//            throw new NotFoundException("no t-shirt found!");
-//        }
+    public void updateTShirt(@RequestBody @Valid TShirt tShirt) {
         serviceLayer.updateTShirt(tShirt);
     }
 
@@ -90,7 +85,5 @@ public class TShirtController {
         }
         serviceLayer.removeTShirt(id);
     }
-
-
 
 }

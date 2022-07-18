@@ -2,7 +2,6 @@ package com.dpc.M4_Summative_DPC.controller;
 
 import com.dpc.M4_Summative_DPC.exceptions.NotFoundException;
 import com.dpc.M4_Summative_DPC.models.Game;
-import com.dpc.M4_Summative_DPC.models.TShirt;
 import com.dpc.M4_Summative_DPC.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,19 +23,19 @@ public class GameController {
         List<Game> returnList = service.getAllGames();
         if (title != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getTitle().contains(title))
+                    .filter(g -> g.getTitle().equals(title))
                     .collect(Collectors.toList());
         }
 
         if (esrbRating != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getEsrbRating().contains(esrbRating))
+                    .filter(g -> g.getEsrbRating().equals(esrbRating))
                     .collect(Collectors.toList());
         }
 
         if (studio != null) {
             returnList = returnList.stream()
-                    .filter(g -> g.getEsrbRating().contains(studio))
+                    .filter(g -> g.getStudio().equals(studio))
                     .collect(Collectors.toList());
         }
 
@@ -62,33 +61,33 @@ public class GameController {
         }
         return service.getGameByTitle(title);
     }
-    @GetMapping("/games/rating/esrbRating")
+    @GetMapping("/games/rating/{rating}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> getGamesByEsrbRating(@PathVariable String esrbRating) {
-        if (service.getGameByTitle(esrbRating).isEmpty()) {
+    public List<Game> getGamesByEsrbRating(@PathVariable String rating) {
+        if (service.getGamesByEsrbRating(rating).isEmpty()) {
             throw new NotFoundException("Rating does not exist.");
         }
-        return service.getGamesByEsrbRating(esrbRating);
+        return service.getGamesByEsrbRating(rating);
     }
 
     @GetMapping("/games/studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByStudio(@PathVariable String studio) {
         if (service.getGamesByStudio(studio).isEmpty()) {
-            throw new NotFoundException("Rating does not exist.");
+            throw new NotFoundException("Studio does not exist.");
         }
         return service.getGamesByStudio(studio);
     }
 
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
-    public Game addGame(@RequestBody Game game) {
+    public Game addGame(@RequestBody @Valid Game game) {
         return service.addGame(game);
     }
 
     @PutMapping("/games")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGame(@RequestBody Game game) {
+    public void updateGame(@RequestBody @Valid Game game) {
         service.updateGame(game);
     }
 

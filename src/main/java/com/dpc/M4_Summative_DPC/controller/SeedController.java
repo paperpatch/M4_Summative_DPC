@@ -1,8 +1,5 @@
 package com.dpc.M4_Summative_DPC.controller;
 
-import com.dpc.M4_Summative_DPC.models.Console;
-import com.dpc.M4_Summative_DPC.models.Game;
-import com.dpc.M4_Summative_DPC.models.TShirt;
 import com.dpc.M4_Summative_DPC.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
