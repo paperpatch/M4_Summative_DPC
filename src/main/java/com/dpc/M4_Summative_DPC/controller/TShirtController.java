@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class TShirtController {
@@ -26,8 +27,22 @@ public class TShirtController {
 
     @GetMapping("/tshirt")
     @ResponseStatus(HttpStatus.OK)
-    public List<TShirt> getAllTShirt() {
-       return serviceLayer.findAllTshirt();
+    public List<TShirt> getAllTShirt(@RequestParam(required=false) String size, @RequestParam(required = false) String color) {
+        List<TShirt> returnList = serviceLayer.findAllTshirt();
+
+        if (size != null) {
+            returnList = returnList.stream()
+                    .filter(g -> g.getSize().contains(size))
+                    .collect(Collectors.toList());
+        }
+
+        if (color != null) {
+            returnList = returnList.stream()
+                    .filter(g -> g.getColor().contains(color))
+                    .collect(Collectors.toList());
+        }
+
+        return returnList;
     }
 
     @GetMapping("/tshirt/color/{color}")
