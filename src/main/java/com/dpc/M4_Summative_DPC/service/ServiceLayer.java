@@ -31,6 +31,15 @@ public class ServiceLayer {
         this.processingFeeRepository = processingFeeRepository;
     }
 
+    public ServiceLayer(GameRepository gameRepository) {
+    }
+
+    public ServiceLayer(ConsoleRepository consoleRepository) {
+    }
+
+    public ServiceLayer(TShirtRepository tShirtRepository) {
+    }
+
     // Clear Database
     public void clearDatabase() {
         gameRepository.deleteAll();

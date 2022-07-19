@@ -1,6 +1,7 @@
 package com.dpc.M4_Summative_DPC.repository;
 
 import com.dpc.M4_Summative_DPC.models.Game;
+import com.dpc.M4_Summative_DPC.service.ServiceLayer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ public class GameRepositoryTest {
     @Autowired
     GameRepository gameRepository;
     Game testGame;
+    ServiceLayer service;
 
     @Before
     public void setUp() throws Exception {
@@ -31,6 +33,8 @@ public class GameRepositoryTest {
         testGame.setStudio("JoWooD Productions");
         testGame.setQuantity(234);
         testGame = gameRepository.save(testGame);
+
+        service = new ServiceLayer(gameRepository);
     }
 
     @Test
