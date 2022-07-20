@@ -50,7 +50,7 @@ Start up Postman or Insomnia to check your API routes. Seed your database using 
 
 ## API Routes
 
-- Detailed API routes and instructions can be found in [openapi.yaml](./api-documentation.yaml) file. 
+- Detailed API routes and instructions can be found in [openapi.yaml](./openapi.yaml) file. 
 
 *Recommended to use API Routes through Postman or Insomnia
 *Note that localhost:8080 is typically the default server. Please adjust server according to your specifications.
